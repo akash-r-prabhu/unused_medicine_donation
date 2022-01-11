@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js</script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<title>Personal Website</title>
+</head>
+<body>
+	<!-- Header -->
+	<nav class="navbar" style="top: 1;" >
+		<div class="inner-width">
+			<img src="{{ url_for('static', filename='logo1.jpg') }}" class="logo"></img>
+			<button class="menu-toggler">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+		<div class="navbar-menu">
+			<a href="/">Home</a>
+			<a href="/#about">About</a>
+			<a href="/#services">Service</a>
+			<a href="/#education">Education</a>
+			<a href="/#contact">Contact</a>
+			<a href="/login">Login</a>
+			
+		</div>
+	</div>
+</nav>
+	<section id="home" style="background-image:url('#');">
+	<div class="inner-width">
+		<div class="content">
+			<h1></h1>
+			<div class="sm">
+				<a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+				<a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+				<a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+				<a href="#"><ion-icon name="logo-linkedin"></ion-icon></a>		
+			</div>
+			<div class="buttons">
+				<a href="#">Contact</a>
+			</div>
+		</div>
+	</div>
+</section>
+		<section id="about">
+			<div class="inner-width">
+				<h1 class="section-title">About</h1>
+				<div class="about-content">
+					<div class="about-text">
+					<h2>Hi, We are here to help you</h2>
+					<h3>
+						<span>Coordinator</span>
+						<span>Requestor</span>
+						<span>Supporter</span>
+					</h3>
+					<p>
+						To fulfil the growing need for improved health-care facilities and services, we can
+						tap into the power of the internet and its vast network, which allows individuals to
+						help one another with a single click from their phone. The planned Medicine
+						Donation system seeks to provide an online platform for giving medicines or
+						unused medicines to those who are in need. Users can sign up for this system by
+						filling out the required information.
+						
+					</p>
+					<br>
+					<br>
+					<h2>Countries that our system helped</h2>
+				</div>
+				</div>
+			<div class="skills">
+			<div class="skill">
+				<div class="skill-info">
+					<span>India</span>
+					<span>90%</span>
+				</div>
+				<div class="skill-bar html"></div>
+			</div>
+			
+			<div class="skill">
+				<div class="skill-info">
+					<span>United states</span>
+					<span>40%</span>
+				</div>
+				<div class="skill-bar css"></div>
+			</div>
+			
+			<div class="skill">
+				<div class="skill-info">
+					<span>Japan</span>
+					<span>80%</span>
+				</div>
+					<div class="skill-bar js"></div>
+			</div>
+		
+			<div class="skill">
+				<div class="skill-info">
+					<span>China</span>
+					<span>100%</span>
+				</div>
+				<div class="skill-bar python"></div>
+			</div>
+			
+			<div class="skill">
+				<div class="skill-info">
+					<span>Australia</span>
+					<span>70%</span>
+				</div>
+					<div class="skill-bar photoshop"></div>
+			</div>
+		
+			<div class="skill">
+				<div class="skill-info">
+					<span>Korea</span>
+					<span>80%</span>
+				</div>
+					<div class="skill-bar aftereffect"></div>
+			</div>
+		
+		</div>
+			</div>
+		</section>
+	<section id="services" class="servicebar">
+		<div class="inner-width">
+			<h1 class="section-title">Services</h1>
+			<div class="services">
+			<div class="service">
+			<h4>Uses</h4>
+			<br>
+			<br>
+			<p>It helps poor people for medication</p>
+			</div>
+			<div class="service">
+			<h4>Our Work</h4>
+			<br>
+			<br>
+			<p>It will help to maintain records of medicines</p>
+			</div>
+			<div class="service">
+			<h4>Motive</h4>
+			<br>
+			<br>
+			<p>Many needy people will get cured</p>
+			</div>
+			<div class="service">
+			<h4>Database Management</h4>
+			<br>
+			<br>
+			<p>Managed by high skill employees</p>
+			</div>
+			<div class="service">
+			<h4>Output</h4>
+			<br>
+			<br>
+			<p>The website should allow users to donate any unneeded medicine to a non-profit organization.</p>
+			</div>
+		</div>
+	</section>
+	
+	<section id="contact">
+		<div class="inner-width">
+		<h1 class="section-title">Contact</h1>
+		<div class="contact-info">
+			<div class="item">
+			<ion-icon name="phone-portrait-outline"></ion-icon>
+			+91 555666943
+		</div>
+		<div class="item">
+			<ion-icon name="pencil-outline"></ion-icon>
+			asteriplatina@gamil.com
+		</div>
+		<div class="item">
+			<ion-icon name="location-outline"></ion-icon>
+			India
+		</div>
+		</div>
+		
+	<form action="" method="post" class="contact-form" >
+		<input type="text" class="name"  placeholder="Your Full Name" required>
+		<input type="text" class="email" placeholder="Email" required>
+		<input type="text" class="subject"  placeholder="Subject" required>
+		<textarea class="message" placeholder="Message" required></textarea>
+		<input type="submit" value="Send Message" class="btn">
+	
+	</form>
+	</div>
+	</section>
+<footer>
+	<div class="inner-width">
+	<div class="copyright">
+	&copy;2021 || Designed by Asteri Platina
+	</div>
+		<div class="sm">
+			<a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+			<a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+			<a href="#"><ion-icon name="logo-linkedin"></ion-icon></a>
+			<a href="#"><ion-icon name="logo-youtube"></ion-icon></a>
+
+		
+		</div>
+	</div>
+</footer>
+<button class="goTop">
+<ion-icon name="chevron-up-circle-outline"></ion-icon></button>
+	<script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+</body>
+</html>

@@ -4,6 +4,7 @@ import random
 from flask import Flask,render_template,request
 from flask.sessions import NullSession
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///asteri_platina.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
@@ -20,7 +21,7 @@ class UserEmail(db.Model):
 # create table UserIdentity( UniqueID varchar(12) primary key, user_name varchar(50) not null, mobile int unique not null);
 class UserIdentity(db.Model):
     UniqueID =db.Column(db.String(12),primary_key=True)
-    user_name=db.Column(db.String(200),nullable=False)
+    user_name=db.Column(db.String(200),unique=True,nullable=False)
     mobile=db.Column(db.Integer,unique=True,nullable=False)
 
 
@@ -126,7 +127,7 @@ class RequestedMedicine(db.Model):
     request_id=db.Column(db.Integer,primary_key=True)
     med_id=db.Column(db.Integer,db.ForeignKey(Medicine.med_id),nullable=False)
     need_date=db.Column(db.DateTime,nullable=False)
-    requested_date=db.Column(db.DateTime,nullable=False)
+    requested_date=db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
     requested_quanity=db.Column(db.Integer,nullable=False)
     requestor_id=db.Column(db.Integer,db.ForeignKey(Requestor.requestor_id),nullable=False)
 
@@ -163,10 +164,87 @@ class Announcement(db.Model):
 
 # Table creation completed
 
+# @app.route("/")
+# def hello_world():
+#     return render_template("index.html")
+
+
+# @app.route("/user_registration",methods=['GET','POST'])
+# def user_registration():
+#     ruid=0
+#     if request.method=="POST":
+#         uid=random.randint(1000,9999)
+#         ruid=uid
+#         upass=request.form['pass']
+#         ufname=request.form['fname']
+#         ulname=request.form['lname']
+#         umobile=request.form['phone']
+#         uaadhar=request.form['aadharno']
+#         users = users_db(uid=uid,ufname=ufname,ulname=ulname,umobile=umobile,uaadhar=uaadhar,upass=upass)
+#         db.session.add(users)
+#         db.session.commit()
+#     return render_template("user_registration.html",ruid=ruid)
+
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return render_template("index.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+@app.route("/requestor_login")
+def requestor_login():
+    return render_template("requestor_login.html")
+
+@app.route("/donor_login")
+def donor_login():
+    return render_template("donor_login.html")
+
+@app.route("/admin_login")
+def admin_login():
+    return render_template("admin_login.html")
+
+@app.route("/ngo_login")
+def ngo_login():
+    return render_template("ngo_login.html")
+
+
+# user_name
+# user_email
+# user_password
+# user_password
+# ph_no
+# Age
+# addr
+# aadhar
+# user_job
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
+@app.route("/donor_signup")
+def donor_signup():
+    return render_template("donor_signup.html")
+
+@app.route("/requestor_signup")
+def requestor_signup():
+    return render_template("requestor_signup.html")
+
+@app.route("/ngo_signup")
+def ngo_signup():
+    return render_template("ngo_signup.html")
+
+@app.route("/user_profile")
+def userprofile():
+    return render_template("userprofile.html")
+
+@app.route("/admin_homepage")
+def admin_homepage():
+    return render_template("admin_homepage.html")
+
+
 
 if __name__=="__main__":
     app.run(debug=True)
