@@ -1,6 +1,7 @@
 from enum import unique
 import re
 import random
+import datetime
 from flask import Flask,render_template,request
 from flask.sessions import NullSession
 from flask_sqlalchemy import SQLAlchemy
@@ -20,7 +21,7 @@ class UserEmail(db.Model):
 
 # create table UserIdentity( UniqueID varchar(12) primary key, user_name varchar(50) not null, mobile int unique not null);
 class UserIdentity(db.Model):
-    UniqueID =db.Column(db.String(12),primary_key=True)
+    UniqueID =db.Column(db.String(50),primary_key=True)
     user_name=db.Column(db.String(200),unique=True,nullable=False)
     mobile=db.Column(db.Integer,unique=True,nullable=False)
 
@@ -32,9 +33,9 @@ class UserIdentity(db.Model):
 # foreign key (email_id) references UserEmail(email_id),
 # foreign key (UniqueID) references UserIdentity(UniqueID));
 class users(db.Model):
-    id =db.Column(db.Integer,primary_key=True)
-    email_id=db.Column(db.String(50),db.ForeignKey(UserEmail.email_id),unique=True,nullable=False)
-    UniqueID=db.Column(db.Integer,db.ForeignKey(UserIdentity.UniqueID),unique=True,nullable=False)
+    id =db.Column(db.String(10),primary_key=True)
+    email_id=db.Column(db.String(50),db.ForeignKey(UserEmail.email_id),nullable=False)
+    UniqueID=db.Column(db.String(50),db.ForeignKey(UserIdentity.UniqueID),unique=True,nullable=False)
 
 
 # create table UserAddress(
@@ -47,35 +48,35 @@ class users(db.Model):
 # Pincode numeric(6,0) not null, foreign key (id) references Users(id));
 
 class UserAddress(db.Model):
-    id =db.Column(db.Integer,primary_key=True)
+    id =db.Column(db.String(10),db.ForeignKey(users.id),primary_key=True)
     DoorNo=db.Column(db.String(10),nullable=False)
     Street=db.Column(db.String(100),nullable=False)
     Area=db.Column(db.String(100),nullable=False)
     City=db.Column(db.String(50),nullable=False)
     State=db.Column(db.String(50),nullable=False)
-    Pincode=db.Column(db.Numeric(6,0),db.ForeignKey(users.id),nullable=False)
+    Pincode=db.Column(db.String(6),nullable=False)
 
 # create table Admins(
 # admin_id int primary key,
 # admin_desig varchar(30) not null,
 # foreign key (admin_id) references Users(id));
 class Admins(db.Model):
-    admin_id=db.Column(db.Integer,db.ForeignKey(users.id),primary_key=True)
+    admin_id=db.Column(db.String(10),db.ForeignKey(users.id),primary_key=True)
     admin_desig=db.Column(db.String(30),nullable=False)
 
 # create table NGO( 
 # NGO_id int primary key, 
 # foreign key (NGO_id) references Users(id)); 
 class NGO(db.Model):
-    NGO_id=db.Column(db.Integer,db.ForeignKey(users.id),primary_key=True)
+    NGO_id=db.Column(db.String(10),db.ForeignKey(users.id),primary_key=True)
   
 # create table Donor( 
 # donor_id int primary key, 
 # dob date not null, 
 # foreign key (donor_id) references Users(id)); 
 class Donor(db.Model):
-    donor_id=db.Column(db.Integer,db.ForeignKey(users.id),primary_key=True)
-    dob=db.Column(db.DateTime,db.ForeignKey(users.id),nullable=False)
+    donor_id=db.Column(db.String(10),db.ForeignKey(users.id),primary_key=True)
+    dob=db.Column(db.String(15),nullable=False)
  
    
 
@@ -84,13 +85,13 @@ class Donor(db.Model):
 # dob date not null, 
 # foreign key (requestor_id) references Users(id));
 class Requestor(db.Model):
-    requestor_id=db.Column(db.Integer,db.ForeignKey(users.id),primary_key=True)
-    dob=db.Column(db.DateTime,db.ForeignKey(users.id),nullable=False)
+    requestor_id=db.Column(db.String(10),db.ForeignKey(users.id),primary_key=True)
+    dob=db.Column(db.String(15),nullable=False)
 
 # create table BlockedUsers( donor_id int primary key, block_reason varchar(20) not null, block_date date not null, admin_id int not null,
 # foreign key (donor_id) references Donor(donor_id), foreign key (admin_id) references Admins(admin_id));
 class BlockedUsers(db.Model):
-    donor_id=db.Column(db.Integer,db.ForeignKey(Donor.donor_id),primary_key=True)
+    donor_id=db.Column(db.String(10),db.ForeignKey(Donor.donor_id),primary_key=True)
     block_reason=db.Column(db.String(20),nullable=False)
     block_date=db.Column(db.DateTime,nullable=False)
     admin_id=db.Column(db.Integer,db.ForeignKey(Admins.admin_id),nullable=False)
@@ -210,26 +211,70 @@ def admin_login():
 def ngo_login():
     return render_template("ngo_login.html")
 
-
-# user_name
-# user_email
-# user_password
-# user_password
-# ph_no
-# Age
-# addr
-# aadhar
-# user_job
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
 
-@app.route("/donor_signup")
+@app.route("/donor_signup", methods=['GET', 'POST'])
 def donor_signup():
+    if request.method=="POST":
+        email=request.form['email']
+        username=request.form['username']
+        password=request.form['password']
+        mobile=request.form['mobile']
+        dob=request.form['dob']
+        unique_id=request.form['unique_id']
+        door_no=request.form['door_no']
+        street=request.form['street']
+        area=request.form['area']
+        city=request.form['city']
+        state=request.form['state']
+        pincode=request.form['pincode']
+        useremail=UserEmail(email_id=email,password=password)
+        db.session.add(useremail)
+        useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
+        db.session.add(useridentity)
+        q=users.query.all()
+        id="DON"+str(len(q)+1)
+        print("for testing id = ",id)
+        user=users(id=id,email_id=email,UniqueID=unique_id)
+        db.session.add(user)
+        useraddress=UserAddress(id=id,DoorNo=door_no,Street=street,Area=area,City=city,State=state,Pincode=pincode)
+        db.session.add(useraddress)
+        donor=Donor(donor_id=id,dob=str(dob))
+        db.session.add(donor)
+        db.session.commit()
     return render_template("donor_signup.html")
 
-@app.route("/requestor_signup")
+@app.route("/requestor_signup", methods=['GET', 'POST'])
 def requestor_signup():
+    if request.method=="POST":
+        email=request.form['email']
+        username=request.form['username']
+        password=request.form['password']
+        mobile=request.form['mobile']
+        dob=request.form['dob']
+        unique_id=request.form['unique_id']
+        door_no=request.form['door_no']
+        street=request.form['street']
+        area=request.form['area']
+        city=request.form['city']
+        state=request.form['state']
+        pincode=request.form['pincode']
+        useremail=UserEmail(email_id=email,password=password)
+        db.session.add(useremail)
+        useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
+        db.session.add(useridentity)
+        q=users.query.all()
+        id="REQ"+str(len(q)+1)
+        print("for testing id = ",id)
+        user=users(id=id,email_id=email,UniqueID=unique_id)
+        db.session.add(user)
+        useraddress=UserAddress(id=id,DoorNo=door_no,Street=street,Area=area,City=city,State=state,Pincode=pincode)
+        db.session.add(useraddress)
+        requestor=Requestor(requestor_id=id,dob=str(dob))
+        db.session.add(requestor)
+        db.session.commit()
     return render_template("requestor_signup.html")
 
 @app.route("/ngo_signup")
@@ -247,4 +292,4 @@ def admin_homepage():
 
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run()
