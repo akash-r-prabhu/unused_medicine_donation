@@ -74,6 +74,16 @@
         background-color: transparent;
         border-color: #ffffff;
       }
+      form {
+        background-color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0 50px;
+        height: 100%;
+        text-align: center;
+      }
 
       input {
         background-color: #eee;
@@ -106,7 +116,7 @@
         left: 0;
         width: 100%;
         z-index: 2;
-         background-color: #ffffff;
+        background-color: #ffffff;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -195,14 +205,14 @@
 </nav>
   <div class="container" id="container">
     <div class="form-container sign-in-container">
-        <!-- <form action="#"> -->
+        <form action="/ngo_login" method="POST">
             <h1>NGO Login </h1>
             <br>
-            <input type="email" placeholder="Username" />
-            <input type="password" placeholder="Password" />
+            <input type="text" name="id" placeholder="ID" />
+            <input type="password" name="password" placeholder="Password" />
             <a href="#">Forgot your password?</a>
-            <a href="ngodetails.html"><button  id="ngodetails">Log in </button></a>
-        <!-- </form> -->
+            <button type="submit" id="requestmed">Login</button>
+        </form>
     </div>
   </div>
 </html>

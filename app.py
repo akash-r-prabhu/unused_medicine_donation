@@ -195,20 +195,47 @@ def hello_world():
 def login():
     return render_template("login.html")
 
-@app.route("/requestor_login")
+@app.route("/requestor_login", methods=['GET', 'POST'])
 def requestor_login():
+    if request.method=="POST":
+        username=request.form['id']
+        password=request.form['password']
+        requestor= Requestor.query.filter_by(requestor_id=username).first()
+        if(requestor is not None):
+            user=users.query.filter_by(id=username).first()
+            useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
+            if useremail.password==password:
+                return render_template("user_profile.html",type="R",name=username)
     return render_template("requestor_login.html")
 
-@app.route("/donor_login")
+@app.route("/donor_login", methods=['GET', 'POST'])
 def donor_login():
+    if request.method=="POST":
+        username=request.form['id']
+        password=request.form['password']
+        donor= Donor.query.filter_by(donor_id=username).first()
+        if(donor is not None):
+            user=users.query.filter_by(id=username).first()
+            useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
+            if useremail.password==password:
+                return render_template("user_profile.html",type="D",name=username)
     return render_template("donor_login.html")
 
-@app.route("/admin_login")
+@app.route("/admin_login", methods=['GET', 'POST'])
 def admin_login():
     return render_template("admin_login.html")
 
-@app.route("/ngo_login")
+@app.route("/ngo_login", methods=['GET', 'POST'])
 def ngo_login():
+    if request.method=="POST":
+        username=request.form['id']
+        password=request.form['password']
+        ngo= NGO.query.filter_by(NGO_id=username).first()
+        if(ngo is not None):
+            user=users.query.filter_by(id=username).first()
+            useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
+            if useremail.password==password:
+                return render_template("user_profile.html",type="N",name=username)
     return render_template("ngo_login.html")
 
 @app.route("/signup")
@@ -234,7 +261,7 @@ def donor_signup():
         db.session.add(useremail)
         useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
         db.session.add(useridentity)
-        q=users.query.all()
+        q=Donor.query.all()
         id="DON"+str(len(q)+1)
         print("for testing id = ",id)
         user=users(id=id,email_id=email,UniqueID=unique_id)
@@ -244,7 +271,8 @@ def donor_signup():
         donor=Donor(donor_id=id,dob=str(dob))
         db.session.add(donor)
         db.session.commit()
-    return render_template("donor_signup.html")
+        return render_template("donor_signup.html",id=id)
+    return render_template("donor_signup.html",id="")
 
 @app.route("/requestor_signup", methods=['GET', 'POST'])
 def requestor_signup():
@@ -265,7 +293,7 @@ def requestor_signup():
         db.session.add(useremail)
         useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
         db.session.add(useridentity)
-        q=users.query.all()
+        q=Requestor.query.all()
         id="REQ"+str(len(q)+1)
         print("for testing id = ",id)
         user=users(id=id,email_id=email,UniqueID=unique_id)
@@ -275,15 +303,43 @@ def requestor_signup():
         requestor=Requestor(requestor_id=id,dob=str(dob))
         db.session.add(requestor)
         db.session.commit()
-    return render_template("requestor_signup.html")
+        return render_template("requestor_signup.html",id=id)
+    return render_template("requestor_signup.html",id="")
 
-@app.route("/ngo_signup")
+@app.route("/ngo_signup", methods=['GET', 'POST'])
 def ngo_signup():
-    return render_template("ngo_signup.html")
+    if request.method=="POST":
+        email=request.form['email']
+        username=request.form['username']
+        password=request.form['password']
+        mobile=request.form['mobile']
+        unique_id=request.form['unique_id']
+        door_no=request.form['door_no']
+        street=request.form['street']
+        area=request.form['area']
+        city=request.form['city']
+        state=request.form['state']
+        pincode=request.form['pincode']
+        useremail=UserEmail(email_id=email,password=password)
+        db.session.add(useremail)
+        useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
+        db.session.add(useridentity)
+        q=NGO.query.all()
+        id="NGO"+str(len(q)+1)
+        print("for testing id = ",id)
+        user=users(id=id,email_id=email,UniqueID=unique_id)
+        db.session.add(user)
+        useraddress=UserAddress(id=id,DoorNo=door_no,Street=street,Area=area,City=city,State=state,Pincode=pincode)
+        db.session.add(useraddress)
+        ngo=NGO(NGO_id=id)
+        db.session.add(ngo)
+        db.session.commit()
+        return render_template("ngo_signup.html",id=id)
+    return render_template("ngo_signup.html",id="")
 
 @app.route("/user_profile")
 def userprofile():
-    return render_template("userprofile.html")
+    return render_template("user_profile.html")
 
 @app.route("/admin_homepage")
 def admin_homepage():
@@ -292,4 +348,4 @@ def admin_homepage():
 
 
 if __name__=="__main__":
-    app.run()
+    app.run(debug=True)

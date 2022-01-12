@@ -205,14 +205,14 @@
 </nav>
   <div class="container" id="container">
     <div class="form-container sign-in-container">
-        <!-- <form action="#"> -->
+        <form action="/donor_login" method="POST">
             <h1>Donor Login </h1>
             <br>
-            <input type="email" placeholder="Username" />
-            <input type="password" placeholder="Password" />
+            <input type="text" name="id" placeholder="Donor ID" />
+            <input type="password" name="password" placeholder="Password" />
             <a href="#">Forgot your password?</a>
-            <a href="donate_medicine.html"><button  id="donatemed">Log in </button></a>
-        <!-- </form> -->
+            <button type="submit" id="requestmed">Login</button>
+        </form>
     </div>
   </div>
 </html>
