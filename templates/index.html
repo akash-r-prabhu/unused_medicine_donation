@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js</script>
+<!-- <script>https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js</script> -->
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 <title>Personal Website</title>
 </head>
@@ -29,6 +29,10 @@
 			<a href="/#education">Education</a>
 			<a href="/#contact">Contact</a>
 			<a href="/login">Login</a>
+			{% if id is not none%}
+			<a href="/user_profile">Profile</a>
+			<a href="/logout">Logout</a>
+			{% endif %}
 			
 		</div>
 	</div>

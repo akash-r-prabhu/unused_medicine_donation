@@ -6,11 +6,24 @@ from flask import Flask,render_template,request
 from flask.sessions import NullSession
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask_login import UserMixin,LoginManager,login_user,login_required,logout_user,current_user
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///asteri_platina.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 db=SQLAlchemy(app)
+login_manager=LoginManager()
+login_manager.init_app(app)
 
+@login_manager.user_loader
+def load_user(userid):
+    user=users.query.filter_by(id=userid).first()
+    return users.query.get(user.id)
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return render_template("index.html",id=None)
 # table creation
 
 # create table UserEmail(
@@ -32,7 +45,7 @@ class UserIdentity(db.Model):
 # UniqueID varchar(12) unique not null,
 # foreign key (email_id) references UserEmail(email_id),
 # foreign key (UniqueID) references UserIdentity(UniqueID));
-class users(db.Model):
+class users(db.Model,UserMixin):
     id =db.Column(db.String(10),primary_key=True)
     email_id=db.Column(db.String(50),db.ForeignKey(UserEmail.email_id),nullable=False)
     UniqueID=db.Column(db.String(50),db.ForeignKey(UserIdentity.UniqueID),unique=True,nullable=False)
@@ -189,14 +202,15 @@ class Announcement(db.Model):
 
 @app.route("/")
 def hello_world():
-    return render_template("index.html")
+    return render_template("index.html",id=current_user.get_id())
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    return render_template("login.html",id=current_user.get_id())
 
 @app.route("/requestor_login", methods=['GET', 'POST'])
 def requestor_login():
+    logout_user()
     if request.method=="POST":
         username=request.form['id']
         password=request.form['password']
@@ -205,11 +219,13 @@ def requestor_login():
             user=users.query.filter_by(id=username).first()
             useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
             if useremail.password==password:
-                return render_template("user_profile.html",type="R",name=username)
+                login_user(user)
+                return render_template("user_profile.html",id=current_user.get_id())
     return render_template("requestor_login.html")
 
 @app.route("/donor_login", methods=['GET', 'POST'])
 def donor_login():
+    logout_user()
     if request.method=="POST":
         username=request.form['id']
         password=request.form['password']
@@ -218,15 +234,18 @@ def donor_login():
             user=users.query.filter_by(id=username).first()
             useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
             if useremail.password==password:
-                return render_template("user_profile.html",type="D",name=username)
+                login_user(user)
+                return render_template("user_profile.html",id=current_user.get_id())
     return render_template("donor_login.html")
 
 @app.route("/admin_login", methods=['GET', 'POST'])
 def admin_login():
+    logout_user()
     return render_template("admin_login.html")
 
 @app.route("/ngo_login", methods=['GET', 'POST'])
 def ngo_login():
+    logout_user()
     if request.method=="POST":
         username=request.form['id']
         password=request.form['password']
@@ -235,7 +254,8 @@ def ngo_login():
             user=users.query.filter_by(id=username).first()
             useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
             if useremail.password==password:
-                return render_template("user_profile.html",type="N",name=username)
+                login_user(user)
+                return render_template("user_profile.html",id=current_user.get_id())
     return render_template("ngo_login.html")
 
 @app.route("/signup")
@@ -338,8 +358,9 @@ def ngo_signup():
     return render_template("ngo_signup.html",id="")
 
 @app.route("/user_profile")
+@login_required
 def userprofile():
-    return render_template("user_profile.html")
+    return render_template("user_profile.html",id=current_user.get_id())
 
 @app.route("/admin_homepage")
 def admin_homepage():
@@ -348,4 +369,8 @@ def admin_homepage():
 
 
 if __name__=="__main__":
+    app.secret_key = 'super secret key'
+    app.config['SESSION_TYPE'] = 'filesystem'
+
+    app.debug = True
     app.run(debug=True)
