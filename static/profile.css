@@ -9,7 +9,10 @@
   font-family: 'FontAwesome', sans-serif;
 }
 
-
+body{
+	overflow: hidden;
+	scrollbar-width: 0px;
+}
 @font-face {
 	font-family: 'icomoon';
 	src:url('https://jlalovi-cv.herokuapp.com/font/icomoon.eot');
@@ -20,9 +23,7 @@
 	font-weight: normal;
 	font-style: normal;
 }
-body{
-	align-items: ;
-}
+
 [class^="icon-"], [class*=" icon-"] {
 	font-family: 'icomoon';
 	speak: none;
@@ -98,10 +99,10 @@ h1, h2, p, a, span{
 	position: relative;
 }
 	input,select{
-		width: 260px;
+		width: 80%;
 		height: 50px;
-		margin-left: 20px !important;
-		margin-right: 20px;
+		margin-left: 10% !important;
+		margin-right: 10%;
 		margin-top: 10px;
 		margin-bottom: 20px;
 		/* padding-left: 60px; */
@@ -111,12 +112,29 @@ h1, h2, p, a, span{
 		border-radius: 5px;	
 		align-items: center;
 		text-align: center;	
+		cursor: pointer;
 	}
+	/* .custom-file-upload {
+		border: 1px solid #ccc;
+		display: inline-block;
+		padding: 6px 12px;
+		cursor: pointer;
+	} */
 	
 	input[type="file"] {
-
-		margin-top: 3px;
+		/* margin-top: 3px; */
+		/* padding: 5%; */
+		padding-top: 3%;
+		padding-left: 11%;
+		padding-right: 5%;
+		padding-bottom: 5%;
+		cursor: pointer;
+		text-align: center;
 	}
+	::-webkit-file-upload-button{
+		cursor: pointer;
+		visibility: hidden;
+	  }
 		input::-webkit-input-placeholder { /* WebKit browsers */
 	   		color: #fff;	   		
 	   	}
@@ -245,8 +263,10 @@ h1, h2, p, a, span{
 
 .main-container {
 	font-family: 'Ubuntu', sans-serif;
-	width: 950px;
-	height: 1725px;
+	scrollbar-width: 0px;
+	overflow: hidden;
+	/* width: 100%;
+	height: auto; */
 	/* margin: 6em auto; */
 }	
 	/*********************************************** HEADER ***********************************************/
@@ -320,7 +340,9 @@ h1, h2, p, a, span{
 	/** CONTAINERS **/
 	.container {
 		float: left;
-		width: 300px;
+		width: 25%;
+		margin-left: 5%;
+		/* margin-right: 4%; */
 	}
 		.block {
 			margin-bottom: 25px;
@@ -328,9 +350,12 @@ h1, h2, p, a, span{
 			border-radius: 5px;
 		}
 		/******************************************** LEFT CONTAINER *****************************************/
-		.left-container {}
+		.left-container {
+			/* height: 70%; */
+		}
 			.menu-box {
-				height: 360px;
+				/* height: 360px; */
+				height: 70%;
 			}
 				.menu-box .titular {
 					background: #11a8ab;
@@ -723,10 +748,10 @@ h1, h2, p, a, span{
 						}
 		/************************************************** MIDDLE CONTAINER **********************************/
 		.middle-container {
-			margin: 0 25px;			
+			/* margin: 0 25px;			 */
 		}
 			.profile {
-				height: 410px;
+				height: 70%;
 			}
 				.add-button .icon {
 					float: right;
@@ -851,7 +876,7 @@ h1, h2, p, a, span{
 							padding-left: 10px;
 						}
 			.tweets {
-				height: 500px;
+				height: 70%;
 			}
 				.tweets .titular {
 					background: #35aadc;
@@ -944,7 +969,9 @@ h1, h2, p, a, span{
 						background: #cc324b;						
 					}
 		/********************************************* RIGHT CONTAINER ****************************************/
-		
+			.right-container{
+				margin-right: 5%;
+			}
 			.loading {
 				height: 200px;
 				padding-top: 35px;

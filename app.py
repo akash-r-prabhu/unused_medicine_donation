@@ -144,7 +144,7 @@ class RequestedMedicine(db.Model):
     med_id=db.Column(db.Integer,db.ForeignKey(Medicine.med_id),nullable=False)
     need_date=db.Column(db.String(15),nullable=False)
     requested_date=db.Column(db.String(15),nullable=False)
-    requested_quanity=db.Column(db.Integer,nullable=False)
+    requested_quantity=db.Column(db.Integer,nullable=False)
     requestor_id=db.Column(db.Integer,db.ForeignKey(Requestor.requestor_id),nullable=False)
 
 # create table DonatedMedicine( donation_id int primary key, med_id int not null, donation_expiry date not null, donation_quantity int not null, donor_id int not null,
@@ -225,7 +225,7 @@ def requestor_login():
             if useremail.password==password:
                 login_user(user)
                 return redirect(url_for('requestor_homepage'))
-    return render_template("requestor_login.html",)
+    return render_template("requestor_login.html")
 
 @app.route("/donor_login", methods=['GET', 'POST'])
 def donor_login():
@@ -239,7 +239,7 @@ def donor_login():
             useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
             if useremail.password==password:
                 login_user(user)
-                return render_template("donor_homepage.html",id=current_user.get_id())
+                return redirect(url_for('donor_homepage'))
     return render_template("donor_login.html")
 
 @app.route("/admin_login", methods=['GET', 'POST'])
@@ -259,7 +259,7 @@ def ngo_login():
             useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
             if useremail.password==password:
                 login_user(user)
-                return render_template("ngo_homepage.html",id=current_user.get_id())
+                return redirect(url_for('ngo_homepage'))
     return render_template("ngo_login.html")
 
 @app.route("/signup")
@@ -366,12 +366,27 @@ def ngo_signup():
 def userprofile():
     return render_template("user_profile.html",id=current_user.get_id())
 
-@app.route("/donor_homepage")
+@app.route("/donor_homepage", methods=['GET', 'POST'])
 @login_required
 def donor_homepage():
     id=str(current_user.get_id())
-    if id[:3]=="DON":   
-        return render_template("donor_homepage.html",id=current_user.get_id())
+    if id[:3]=="DON":
+        med=Medicine.query.all()  
+        if request.method=="POST":
+            medicine=request.form['medicine']
+            quantity=request.form['quantity']
+            expirydate=request.form['expirydate']
+            q=DonatedMedicine.query.all()
+            donation_id=len(q)+1
+            donmed=DonatedMedicine(donation_id=donation_id,med_id=medicine,donation_expiry=expirydate,donation_quantity=quantity,donor_id=current_user.get_id())
+            db.session.add(donmed)
+            db.session.commit()
+
+        prev_donations=DonatedMedicine.query.filter_by(donor_id=id) 
+        donor_details=users.query.filter_by(id=id)  
+        user_identity=UserIdentity.query.filter_by(UniqueID=donor_details[0].UniqueID) 
+        return render_template("donor_homepage.html",id=current_user.get_id(),med_list=med,prev_donations=prev_donations,donor_details=donor_details,user_identity=user_identity)
+        
     else:
         return render_template("forbidden.html")
 
@@ -387,7 +402,7 @@ def requestor_homepage():
             lastdate=request.form['lastdate']
             q=RequestedMedicine.query.all()
             request_id=len(q)+1
-            reqmed=RequestedMedicine(request_id=request_id,med_id=medicine,need_date=lastdate,requested_date=str(date.today()),requested_quanity=quantity,requestor_id=current_user.get_id())
+            reqmed=RequestedMedicine(request_id=request_id,med_id=medicine,need_date=lastdate,requested_date=str(date.today()),requested_quantity=quantity,requestor_id=current_user.get_id())
             db.session.add(reqmed)
             db.session.commit()
         prev_requests=RequestedMedicine.query.filter_by(requestor_id=id)    
@@ -405,12 +420,36 @@ def requestor_homepage():
 #     requested_quanity=db.Column(db.Integer,nullable=False)
 #     requestor_id=db.Column(db.Integer,db.ForeignKey(Requestor.requestor_id),nullable=False)
 
-@app.route("/ngo_homepage")
+@app.route("/ngo_homepage", methods=['GET', 'POST'])
 @login_required
 def ngo_homepage():
     id=str(current_user.get_id())
     if id[:3]=="NGO":
-        return render_template("ngo_homepage.html",id=current_user.get_id())
+        med=Medicine.query.all()
+        if request.method=="POST" and request.form['dist']==str(100):
+            medicine=request.form['r_medicine']
+            quantity=request.form['r_quantity']
+            lastdate=request.form['r_lastdate']
+            q=RequestedMedicine.query.all()
+            request_id=len(q)+1
+            reqmed=RequestedMedicine(request_id=request_id,med_id=medicine,need_date=lastdate,requested_date=str(date.today()),requested_quantity=quantity,requestor_id=current_user.get_id())
+            db.session.add(reqmed)
+            db.session.commit()
+        elif request.method=="POST" and request.form['dist']==str(102):
+            medicine=request.form['d_medicine']
+            quantity=request.form['d_quantity']
+            expirydate=request.form['d_expirydate']
+            q=DonatedMedicine.query.all()
+            donation_id=len(q)+1
+            donmed=DonatedMedicine(donation_id=donation_id,med_id=medicine,donation_expiry=expirydate,donation_quantity=quantity,donor_id=current_user.get_id())
+            db.session.add(donmed)
+            db.session.commit()
+
+        prev_requests=RequestedMedicine.query.filter_by(requestor_id=id)    
+        prev_donations=DonatedMedicine.query.filter_by(donor_id=id) 
+        ngo_details=users.query.filter_by(id=id)  
+        user_identity=UserIdentity.query.filter_by(UniqueID=ngo_details[0].UniqueID) 
+        return render_template("ngo_homepage.html",id=current_user.get_id(),med_list=med,prev_requests=prev_requests,prev_donations=prev_donations,ngo_details=ngo_details,user_identity=user_identity)
     else:
         return render_template("forbidden.html")
 
