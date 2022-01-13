@@ -201,7 +201,23 @@
         <a href="/#services">Service</a>
         <a href="/#education">Education</a>
         <a href="/#contact">Contact</a>
-        <a href="/login">Login</a>
+        {% if id is none%}
+        <a href="/login">LOGIN</a>
+        {% endif %}
+        {% if id is not none%}
+			{% if id[:3]==REQ%}
+			<a href="/requestor_homepage">PROFILE</a>
+			<a href="/logout">LOG OUT</a>
+			{% endif %}
+			{% if id[:3]=="DON"%}
+			<a href="/donor_homepage">PROFILE</a>
+			<a href="/logout">LOG OUT</a>
+			{% endif %}
+			{% if id[:3]=="NGO"%}
+			<a href="/ngo_homepage">PROFILE</a>
+			<a href="/logout">LOG OUT</a>
+			{% endif %}
+			{% endif %}
         
       </div>
     </div>

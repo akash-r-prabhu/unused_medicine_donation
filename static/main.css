@@ -22,7 +22,7 @@ html{
 	position:fixed;
 	background-color:transparent;
 	width:100%;
-	padding: 30px 0;
+	padding: 10px 0px 30px 0;
 	z-index:999;
 	transition: .3s linear;
 }
@@ -39,7 +39,7 @@ html{
 	justify-content:space-between;
 }
 .logo{
-	width:80px;
+	width:40px;
 	background-size:contain;
 }
 .menu-toggler{
@@ -69,7 +69,7 @@ html{
 	transition:.2s linear
 }
 .navbar-menu a:hover{
-	color:white !important;
+	color:blue !important;
 }
 .sticky{
 	background-color:red;
@@ -101,19 +101,23 @@ html{
 #home .content h1{
 	font-size:60px;
 	margin-bottom:60px;
+	margin-left: 25%;
+	margin-right: 25%;
 	background-color:f1f1f1;
-	width:500px;
+	/* width: 700px; */
 }
 #home .content h1::after{
-	content: " Hello we are Asteri Platina";
+	content: "HELLO!\AWE ARE ASTERI PLATINA!";
+	white-space: pre-wrap;
 	animation: textanim 10s linear infinite;
 }
 @keyframes textanim{
 	30%{
-		content: " To make the medical donation system";
+		content: "MAKING UNUSED MEDICINE DONATION SYSTEM";
+		white-space: normal;
 	}
 	50%{
-		content: "EASY";
+		content: "EASY AND VIABLE";
 	}
 }
 .sm a{

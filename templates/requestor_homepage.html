@@ -1,0 +1,148 @@
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+
+<body style="overflow: hidden; align-items: center">
+
+    <div class="main-container" style=" width:99vw;">
+
+        <!-- HEADER -->
+        <header class="block">
+            <ul class="header-menu horizontal-list">
+                <li>
+                    <a class="header-menu-tab" href="/"><span class="icon entypo-cog scnd-font-color"></span>Home</a>
+                </li>
+                <li>
+                    <a class="header-menu-tab" href="/#about"><span class="icon fontawesome-user scnd-font-color"></span>About</a>
+                </li>
+                <li>
+                    <a class="header-menu-tab" href="/#services"><span class="icon fontawesome-envelope scnd-font-color"></span>Services</a>
+                </li>
+                <li>
+                    <a class="header-menu-tab" href="/#contact"><span class="icon fontawesome-envelope scnd-font-color"></span>Contact</a>
+                </li>
+                <li>
+                    <a class="header-menu-tab" href="/logout">Logout</a>
+                </li>
+            </ul>
+            <div class="profile-menu">
+                <!-- <p>Me <a href="#26"><span class="entypo-down-open scnd-font-color"></span></a></p> -->
+                <!-- <div class="profile-picture small-profile-picture">
+                    <img src="{{ url_for('static', filename='logo1.jpg') }}" class="logo"></img>
+                </div> -->
+            </div>
+        </header>
+
+        <!-- LEFT-CONTAINER -->
+        <div >
+            <div > 
+                <!-- <h2 class="titular">MENU BOX</h2> -->
+                <!-- <ul class="menu-box-menu">
+                    <li>
+                        <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages<div class="menu-box-number">24</div></a>                            
+                    </li>
+                    <li>
+                        <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites<div class="menu-box-number">3</div></a>                            
+                    </li>
+                    <li>
+                        <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events<div class="menu-box-number">5</div></a>                            
+                    </li>
+                    <li>
+                        <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account Settings</a>
+                    </li>                     
+                </ul> -->
+            </div>
+            <div > <!-- DONUT CHART BLOCK (LEFT-CONTAINER) -->
+                <div >
+                    <!-- DONUT-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
+                    <div id="porcion1" class="recorte"><div class="quesito ios" data-rel="21"></div></div>
+                    <div id="porcion2" class="recorte"><div class="quesito mac" data-rel="39"></div></div>
+                    <div id="porcion3" class="recorte"><div class="quesito win" data-rel="31"></div></div>
+                    <div id="porcionFin" class="recorte"><div class="quesito linux" data-rel="9"></div></div>
+                    <!-- END DONUT-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->    
+                    <!-- <p class="center-date"><br><span class="scnd-font-color">2021</span></p>  -->
+                </div>
+                
+            </div>
+            <div> <!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
+                <div >
+                  <!-- LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
+                    <div >
+                       
+                    </div>
+                    <!-- END LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
+                </div>
+                
+            </div>
+            </div>
+        <div class="left-container container">
+            <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
+                <!-- <a class="add-button" href="#28"><span class="icon entypo-plus scnd-font-color"></span></a> -->
+                <!-- <div class="profile-picture big-profile-picture clear">
+                    <img width="150px" alt="Anne Hathaway picture" src="suchal.jpeg" >
+                </div> -->
+                <br>
+                <br>
+                <h1 class="user-name">Welcome back : {{user_identity[0].user_name}}</h1>
+                {% set count = namespace(value=0) %}
+                {%for i in prev_requests%}
+                {% set count.value = count.value + 1 %}
+                {% endfor %}
+                <center>
+                    <div >
+                        <p>ID : {{requestor_details[0].id}}</p>
+                        <p>Email : {{requestor_details[0].email_id}}</p>
+                        <p>Aadhaar : {{requestor_details[0].UniqueID}}</p>
+                        <p>No of previous requests : {{count.value}}</p>
+                    </div>
+                </center>
+                
+                
+            </div>
+        </div>
+
+        <!-- MIDDLE-CONTAINER -->
+        <div class="middle-container container">
+            
+            
+            <div class="tweets block " style="overflow: scroll;"> <!-- TWEETS (MIDDLE-CONTAINER) -->
+                <h2 class="titular" ></span>Previous requests</h2>
+                {%for i in prev_requests%}
+                <div class="tweet first">
+                    <p>Req ID : {{i.request_id}} <br><br>Med ID : {{i.med_id}}<br>Need Date : {{i.need_date}}<br>Quantity: {{i.requested_quanity}}<br>Requested Date : {{i.requested_date}}<a class="tweet-link" href="#17"></a></p>
+                    <!-- <p><a class="time-ago scnd-font-color" href="#18">3 minutes ago</a></p> -->
+                </div>
+                {% endfor %}
+                
+                
+                </div>
+            
+        </div>
+        
+        <div class="right-container container">
+      
+            <form class="tweets block " action="/requestor_homepage" method="POST">
+                <h1 class="titular">Request Medicine</h1>
+                <br>
+                <select id="medicine" name="medicine">
+                    {% for i in range(12) %}
+                    <option value="{{med_list[i].med_id}}">{{med_list[i].med_name}}</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="quantity" placeholder="Quantity required">
+                <input id="lastdate" name="lastdate" type="date" placeholder="Last date">
+                <input type="file" name="prescription" id="">
+                <input type="submit">
+            </form>
+        
+            
+           
+            
+            
+        </div> <!-- end right-container -->
+    
+    </div> <!-- end main-container -->
+
+</body>
+</html>

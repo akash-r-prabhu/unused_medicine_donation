@@ -10,7 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- <script>https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js</script> -->
 <script src="{{ url_for('static', filename='script.js') }}"></script>
-<title>Personal Website</title>
+<title>Asteri Platina</title>
 </head>
 <body>
 	<!-- Header -->
@@ -23,15 +23,26 @@
 			<span></span>
 		</button>
 		<div class="navbar-menu">
-			<a href="/">Home</a>
-			<a href="/#about">About</a>
-			<a href="/#services">Service</a>
-			<a href="/#education">Education</a>
-			<a href="/#contact">Contact</a>
-			<a href="/login">Login</a>
+			<a href="/">HOME</a>
+			<a href="/#about">ABOUT</a>
+			<a href="/#services">SERVICE</a>
+			<a href="/#contact">CONTACT</a>
+			{% if id is none%}
+        	<a href="/login">LOGIN</a>
+        	{% endif %}
 			{% if id is not none%}
-			<a href="/user_profile">Profile</a>
-			<a href="/logout">Logout</a>
+			{% if id[:3]=="REQ"%}
+			<a href="/requestor_homepage">PROFILE</a>
+			<a href="/logout">LOG OUT</a>
+			{% endif %}
+			{% if id[:3]=="DON"%}
+			<a href="/donor_homepage">PROFILE</a>
+			<a href="/logout">LOG OUT</a>
+			{% endif %}
+			{% if id[:3]=="NGO"%}
+			<a href="/ngo_homepage">PROFILE</a>
+			<a href="/logout">LOG OUT</a>
+			{% endif %}
 			{% endif %}
 			
 		</div>
@@ -48,14 +59,14 @@
 				<a href="#"><ion-icon name="logo-linkedin"></ion-icon></a>		
 			</div>
 			<div class="buttons">
-				<a href="#">Contact</a>
+				<a href="#">CONTACT</a>
 			</div>
 		</div>
 	</div>
 </section>
 		<section id="about">
 			<div class="inner-width">
-				<h1 class="section-title">About</h1>
+				<h1 class="section-title">ABOUT</h1>
 				<div class="about-content">
 					<div class="about-text">
 					<h2>Hi, We are here to help you</h2>

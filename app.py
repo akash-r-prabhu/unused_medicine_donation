@@ -1,8 +1,8 @@
 from enum import unique
 import re
 import random
-import datetime
-from flask import Flask,render_template,request
+from datetime import date
+from flask import Flask,render_template,request,url_for, redirect
 from flask.sessions import NullSession
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -16,8 +16,10 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(userid):
-    user=users.query.filter_by(id=userid).first()
-    return users.query.get(user.id)
+    k=users.query.all() 
+    if len(k)!=0:   
+        user=users.query.filter_by(id=userid).first()
+        return users.query.get(user.id)
 
 @app.route("/logout")
 @login_required
@@ -140,8 +142,8 @@ class MedicineClass(db.Model):
 class RequestedMedicine(db.Model):
     request_id=db.Column(db.Integer,primary_key=True)
     med_id=db.Column(db.Integer,db.ForeignKey(Medicine.med_id),nullable=False)
-    need_date=db.Column(db.DateTime,nullable=False)
-    requested_date=db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+    need_date=db.Column(db.String(15),nullable=False)
+    requested_date=db.Column(db.String(15),nullable=False)
     requested_quanity=db.Column(db.Integer,nullable=False)
     requestor_id=db.Column(db.Integer,db.ForeignKey(Requestor.requestor_id),nullable=False)
 
@@ -150,7 +152,7 @@ class RequestedMedicine(db.Model):
 class DonatedMedicine(db.Model):
     donation_id=db.Column(db.Integer,primary_key=True)
     med_id=db.Column(db.Integer,db.ForeignKey(Medicine.med_id),nullable=False)
-    donation_expiry=db.Column(db.DateTime,nullable=False)
+    donation_expiry=db.Column(db.String(15),nullable=False)
     donation_quantity=db.Column(db.Integer,nullable=False)
     donor_id=db.Column(db.Integer,db.ForeignKey(Donor.donor_id),nullable=False)
 
@@ -204,6 +206,8 @@ class Announcement(db.Model):
 def hello_world():
     return render_template("index.html",id=current_user.get_id())
 
+
+
 @app.route("/login")
 def login():
     return render_template("login.html",id=current_user.get_id())
@@ -220,8 +224,8 @@ def requestor_login():
             useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
             if useremail.password==password:
                 login_user(user)
-                return render_template("user_profile.html",id=current_user.get_id())
-    return render_template("requestor_login.html")
+                return redirect(url_for('requestor_homepage'))
+    return render_template("requestor_login.html",)
 
 @app.route("/donor_login", methods=['GET', 'POST'])
 def donor_login():
@@ -235,7 +239,7 @@ def donor_login():
             useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
             if useremail.password==password:
                 login_user(user)
-                return render_template("user_profile.html",id=current_user.get_id())
+                return render_template("donor_homepage.html",id=current_user.get_id())
     return render_template("donor_login.html")
 
 @app.route("/admin_login", methods=['GET', 'POST'])
@@ -255,7 +259,7 @@ def ngo_login():
             useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
             if useremail.password==password:
                 login_user(user)
-                return render_template("user_profile.html",id=current_user.get_id())
+                return render_template("ngo_homepage.html",id=current_user.get_id())
     return render_template("ngo_login.html")
 
 @app.route("/signup")
@@ -362,15 +366,187 @@ def ngo_signup():
 def userprofile():
     return render_template("user_profile.html",id=current_user.get_id())
 
+@app.route("/donor_homepage")
+@login_required
+def donor_homepage():
+    id=str(current_user.get_id())
+    if id[:3]=="DON":   
+        return render_template("donor_homepage.html",id=current_user.get_id())
+    else:
+        return render_template("forbidden.html")
+
+@app.route("/requestor_homepage", methods=['GET', 'POST'])
+@login_required
+def requestor_homepage():
+    id=str(current_user.get_id())
+    if id[:3]=="REQ":
+        med=Medicine.query.all()
+        if request.method=="POST":
+            medicine=request.form['medicine']
+            quantity=request.form['quantity']
+            lastdate=request.form['lastdate']
+            q=RequestedMedicine.query.all()
+            request_id=len(q)+1
+            reqmed=RequestedMedicine(request_id=request_id,med_id=medicine,need_date=lastdate,requested_date=str(date.today()),requested_quanity=quantity,requestor_id=current_user.get_id())
+            db.session.add(reqmed)
+            db.session.commit()
+        prev_requests=RequestedMedicine.query.filter_by(requestor_id=id)    
+        requestor_details=users.query.filter_by(id=id)  
+        user_identity=UserIdentity.query.filter_by(UniqueID=requestor_details[0].UniqueID)   
+        return render_template("requestor_homepage.html",id=current_user.get_id(),med_list=med,prev_requests=prev_requests,requestor_details=requestor_details,user_identity=user_identity)
+    else:
+        return render_template("forbidden.html")
+
+# class RequestedMedicine(db.Model):
+#     request_id=db.Column(db.Integer,primary_key=True)
+#     med_id=db.Column(db.Integer,db.ForeignKey(Medicine.med_id),nullable=False)
+#     need_date=db.Column(db.DateTime,nullable=False)
+#     requested_date=db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+#     requested_quanity=db.Column(db.Integer,nullable=False)
+#     requestor_id=db.Column(db.Integer,db.ForeignKey(Requestor.requestor_id),nullable=False)
+
+@app.route("/ngo_homepage")
+@login_required
+def ngo_homepage():
+    id=str(current_user.get_id())
+    if id[:3]=="NGO":
+        return render_template("ngo_homepage.html",id=current_user.get_id())
+    else:
+        return render_template("forbidden.html")
+
 @app.route("/admin_homepage")
+@login_required
 def admin_homepage():
-    return render_template("admin_homepage.html")
+    return render_template("admin_homepage.html",id=current_user.get_id())
 
 
+
+
+def medinit():
+    k=Medicine.query.all() 
+    if len(k)==0:
+        med=Medicine(med_id="01",med_name="Amoxicillin")
+        db.session.add(med)
+        med=Medicine(med_id="02",med_name="Ampicillin")
+        db.session.add(med)
+        med=Medicine(med_id="03",med_name="Advair")
+        db.session.add(med)
+        med=Medicine(med_id="04",med_name="Singulair")
+        db.session.add(med)
+        med=Medicine(med_id="05",med_name="Zyrtec")
+        db.session.add(med)
+        med=Medicine(med_id="06",med_name="Tavist-D")
+        db.session.add(med)
+        med=Medicine(med_id="07",med_name="Tylenol")
+        db.session.add(med)
+        med=Medicine(med_id="08",med_name="Aspirin")
+        db.session.add(med)
+        med=Medicine(med_id="09",med_name="Phenobarbital")
+        db.session.add(med)
+        med=Medicine(med_id="10",med_name="Valproic Acid")
+        db.session.add(med)
+        med=Medicine(med_id="11",med_name="Insulin")
+        db.session.add(med)
+        med=Medicine(med_id="12",med_name="Glucotrol")
+        db.session.add(med)
+
+
+        effects=MedicineEffects(med_id="01",med_effects="Nausea")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="01",med_effects="Rash")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="02",med_effects="Yeast Infections")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="02",med_effects="Fever")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="02",med_effects="Diarrhea")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="03",med_effects="Nervous Feeling")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="03",med_effects="Vomiting")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="04",med_effects="Sweating")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="04",med_effects="Nausea")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="05",med_effects="Drowsiness")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="06",med_effects="Insomnia")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="06",med_effects="Weakness")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="07",med_effects="Nausea")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="07",med_effects="Tinnitus")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="07",med_effects="Stomach Upset")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="08",med_effects="Nausea")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="08",med_effects="Tinnitus")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="08",med_effects="Stomach Upset")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="09",med_effects="Dizziness")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="09",med_effects="Drowsiness")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="09",med_effects="Fainting")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="10",med_effects="Dizziness")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="10",med_effects="Drowsiness")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="11",med_effects="Nausea")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="11",med_effects="Heartburn")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="11",med_effects="Fatigue")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="12",med_effects="Nausea")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="12",med_effects="Heartburn")
+        db.session.add(effects)
+        effects=MedicineEffects(med_id="12",med_effects="Fatigue")
+        db.session.add(effects)
+        
+
+
+
+
+        medclass=MedicineClass(med_id="01",med_class="Antibiotics")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="02",med_class="Antibiotics")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="03",med_class="Anti-Asthma Agents")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="04",med_class="Anti-Asthma Agents")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="05",med_class="Antihistamines")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="06",med_class="Antihistamines")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="07",med_class="Analgesics")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="08",med_class="Analgesics")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="09",med_class="Anticonvulsants")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="09",med_class="Antiepileptic")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="10",med_class="Anticonvulsants")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="10",med_class="Antiepileptic")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="11",med_class="Antidiabetics")
+        db.session.add(medclass)
+        medclass=MedicineClass(med_id="12",med_class="Antidiabetics")
+        db.session.add(medclass)
+        db.session.commit()
+    
 
 if __name__=="__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
-
-    app.debug = True
+    medinit()
     app.run(debug=True)
