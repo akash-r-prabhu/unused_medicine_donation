@@ -20,7 +20,9 @@
 	font-weight: normal;
 	font-style: normal;
 }
-
+body{
+	align-items: ;
+}
 [class^="icon-"], [class*=" icon-"] {
 	font-family: 'icomoon';
 	speak: none;
