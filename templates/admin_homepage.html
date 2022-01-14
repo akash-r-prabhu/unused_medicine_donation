@@ -1,228 +1,237 @@
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 
-  <head>
-    <link rel="stylesheet" href="admin.css" />
-    <script src="admin.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
-      @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+</head>
 
-      * {
-        box-sizing: border-box;
-      }
+<body style="overflow-y: scroll; overflow-x: hidden ">
 
-      body {
-        background: #f6f5f7;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        font-family: "Montserrat", sans-serif;
-        height: 100vh;
-        margin: -20px 0 50px;
-      }
+    <div class="main-container"style=" width:99vw;">
 
-      h1 {
-        font-weight: bold;
-        margin: 0;
-      }
-
-      h2 {
-        text-align: center;
-      }
-
-      p {
-        font-size: 14px;
-        font-weight: 100;
-        line-height: 20px;
-        letter-spacing: 0.5px;
-        margin: 20px 0 30px;
-      }
-
-      span {
-        font-size: 12px;
-      }
-
-      a {
-        color: #333;
-        font-size: 14px;
-        text-decoration: none;
-        margin: 15px 0;
-      }
-
-      button {
-        border-radius: 20px;
-        border: 1px solid #ff4b2b;
-        background-color: #ff4b2b;
-        color: #ffffff;
-        font-size: 12px;
-        font-weight: bold;
-        padding: 12px 45px;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        transition: transform 80ms ease-in;
-      }
-
-      button:active {
-        transform: scale(0.95);
-      }
-
-      button:focus {
-        outline: none;
-      }
-
-      button.ghost {
-        background-color: transparent;
-        border-color: #ffffff;
-      }
-      form {
-        background-color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        padding: 0 50px;
-        height: 100%;
-        text-align: center;
-      }
-
-      input {
-        background-color: #eee;
-        border: none;
-        padding: 12px 15px;
-        margin: 8px 0;
-        width: 100%;
-      }
-
-      .container {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-          0 10px 10px rgba(0, 0, 0, 0.22);
-        position: relative;
-        overflow: hidden;
-        width: 768px;
-        max-width: 100%;
-        min-height: 480px;
-      }
-
-      .form-container {
-        position: absolute;
-        top: 0;
-        height: 100%;
-        transition: all 0.6s ease-in-out;
-      }
-
-      .sign-in-container {
-        background-color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        padding: 0 50px;
-        height: 100%;
-        text-align: center;
-        left: 0;
-        width: 100%;
-        z-index: 2;
-      }
-
-      .container.right-panel-active .sign-in-container {
-        transform: translateX(100%);
-      }
-
-    
-
-      .container.right-panel-active .sign-up-container {
-        transform: translateX(100%);
-        opacity: 1;
-        z-index: 5;
-        animation: show 0.6s;
-      }
-
-      @keyframes show {
-        0%,
-        49.99% {
-          opacity: 0;
-          z-index: 1;
-        }
-
-        50%,
-        100% {
-          opacity: 1;
-          z-index: 5;
-        }
-      }
-
-      footer {
-        background-color: #222;
-        color: #fff;
-        font-size: 14px;
-        bottom: 0;
-        position: fixed;
-        left: 0;
-        right: 0;
-        text-align: center;
-        z-index: 999;
-      }
-
-      footer p {
-        margin: 10px 0;
-      }
-
-      footer i {
-        color: #ff416c;
-      }
-
-      footer a {
-        color: #3c97bf;
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar" style="top: 1;" >
-      <div class="inner-width">
-        <img src="{{ url_for('static', filename='logo1.jpg') }}" class="logo"></img>
-        <button class="menu-toggler">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div class="navbar-menu">
-        <a href="/">Home</a>
-        <a href="/#about">About</a>
-        <a href="/#services">Service</a>
-        <a href="/#education">Education</a>
-        <a href="/#contact">Contact</a>
-        <a href="/login">Login</a>
-        
-      </div>
-    </div>
-  </nav>
-  <div class="container" id="container">
-    <div class="form-container sign-in-container">
-    <!-- <form action="#" style="margin-right: 50%;"> -->
-          <h1></h1><br>
-        <a href="verifyrequest.html"><button id="requestor">Verify Requests</button></a><br>
-        <a href="verifydonation.html"><button>Verify Donations</button></a><br>
-        <a href="block_user.html"><button>Block users</button></a>
-        <br>
-        
-    <!-- </form> -->
-      
-    </div>
-    <!-- <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start journey with us</p>
-                    <a href="signup.html"><button class="ghost" id="signUp">Sign Up</button></a>
-                </div>
+        <!-- HEADER -->
+        <header class="block" style="margin-left:0.5vw;">
+            <ul class="header-menu horizontal-list">
+                <li>
+                    <a class="header-menu-tab" href="/"><span class="icon entypo-cog scnd-font-color"></span>Home</a>
+                </li>
+                <li>
+                    <a class="header-menu-tab" href="/#about"><span class="icon fontawesome-user scnd-font-color"></span>About</a>
+                </li>
+                <li>
+                    <a class="header-menu-tab" href="/#services"><span class="icon fontawesome-envelope scnd-font-color"></span>Services</a>
+                </li>
+                <li>
+                    <a class="header-menu-tab" href="/#contact"><span class="icon fontawesome-envelope scnd-font-color"></span>Contact</a>
+                </li>
+                <li>
+                    <a class="header-menu-tab" href="/logout">Logout</a>
+                </li>
+            </ul>
+            <div class="profile-menu">
+                <!-- <p>Me <a href="#26"><span class="entypo-down-open scnd-font-color"></span></a></p> -->
+                <!-- <div class="profile-picture small-profile-picture">
+                    <img src="{{ url_for('static', filename='logo1.jpg') }}" class="logo"></img>
+                </div> -->
             </div>
-        </div> -->
-  </div>
+        </header>
+
+        <!-- LEFT-CONTAINER -->
+        <div >
+            <div > 
+                <!-- <h2 class="titular">MENU BOX</h2> -->
+                <!-- <ul class="menu-box-menu">
+                    <li>
+                        <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages<div class="menu-box-number">24</div></a>                            
+                    </li>
+                    <li>
+                        <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites<div class="menu-box-number">3</div></a>                            
+                    </li>
+                    <li>
+                        <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events<div class="menu-box-number">5</div></a>                            
+                    </li>
+                    <li>
+                        <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account Settings</a>
+                    </li>                     
+                </ul> -->
+            </div>
+          
+            <div> <!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
+                <div >
+                  <!-- LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
+                    <div >
+                       
+                    </div>
+                    <!-- END LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
+                </div>
+                
+            </div>
+            </div>
+        <div class="left-container container">
+          <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
+            <br>
+            <div class="profile-picture big-profile-picture clear">
+                <img width="100%" width="100%" alt="Anne Hathaway picture" src="{{ url_for('static', filename='admin_avatar.jpeg') }}"  style="object-fit: cover;width: 150px;
+                height: 150px;
+                border-radius: 50%;">
+            </div>
+            <h1 class="user-name">{{id}}</h1>
+            <div class="profile-description">
+                <p class="scnd-font-color">Admin of Asteri Platina</p>
+                <p class="scnd-font-color">Email id : {{admin_details[0].email_id}}</p>
+                <p class="scnd-font-color">Unique id : {{admin_details[0].UniqueID}}</p>
+            </div>
+            
+        </div>
+
+          {% for i in get_flashed_messages() %}
+          <div class="flex bg-green-100 rounded-lg p-4 mb-4 text-sm text-green-700" role="alert">
+            <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <div>
+                <span class="font-medium" style="color: black;">{{i}}</span> 
+            </div>
+        </div>
+          {% endfor %}
+          <h1>Active medicine requests</h1>
+          <table class="min-w-full border-collapse block md:table">
+            <thead class="block md:table-header-group">
+              <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Request ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Med ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Need Date</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Requested Date</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Quantity</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Requestor ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Action</th>
+                
+
+              </tr>
+            </thead>
+            <tbody class="block md:table-row-group">
+              {% for i in req_list%}
+              <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row" style="color:aliceblue;">
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Request ID</span>{{i.request_id}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Med ID</span>{{i.med_id}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Need Date</span>{{i.need_date}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Requested Date</span>{{i.requested_date}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Quantity</span>{{i.requested_quantity}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Requestor ID</span>{{i.requestor_id}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                  <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                  <form action="/admin_homepage" method="POST">
+                  <input type="hidden"  name="identifier" value="form1" >
+                  <input type="hidden" name="request_id" value="{{i.request_id}}">
+                  <button type="submit" name="submit_button" value="accept"  class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Accept</button>
+                  <button type="submit" name="submit_button" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Reject</button>
+                </form>
+                </td>
+              </tr>
+             {% endfor %}
+              
+              		
+            </tbody>
+          </table>
+
+
+          <h1>Active donation requests</h1>
+          <table class="min-w-full border-collapse block md:table">
+            <thead class="block md:table-header-group">
+              <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Donation ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Med ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Expiry</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Quantity</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Donor ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Action</th>
+                
+
+              </tr>
+            </thead>
+            <tbody class="block md:table-row-group">
+              {% for i in don_list%}
+              <tr class="bg-gray-300 border border-grey-500 md:border-none block md:table-row" style="color:aliceblue;">
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Donation ID</span>{{i.donation_id}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Med ID</span>{{i.med_id}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Expiry</span>{{i.donation_expiry}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Quantity</span>{{i.donation_quantity}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Donor ID</span>{{i.donor_id}}</td>
+                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                  <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
+                  <form action="/admin_homepage" method="POST">
+                    <input type="hidden"  name="identifier" value="form2" >
+                    <input type="hidden" name="donation_id" value="{{i.donation_id}}">
+                  <button type="submit" name="submit_button" value="accept" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Accept</button>
+                  <button type="submit" name="submit_button" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Reject</button>
+                </form>
+                </td>
+              </tr>
+             {% endfor %}
+              
+              		
+            </tbody>
+          </table>
+
+
+        </div>
+
+        <!-- MIDDLE-CONTAINER -->
+        <div class="middle-container container" >
+            <br><br><br><br>
+
+            <details style="color: white;">
+              <summary>BLOCK USER</summary>
+              <div style="color: white; width: 50%; margin: 0 25%;">
+                <form action="/admin_homepage" method="POST" style="color: white;">
+                <input type="hidden"  name="identifier" value="block_form" >
+                <input type="text" name="user" list="donor_list" placeholder="DONOR TO BE BLOCKED">
+                    <datalist id="donor_list" >
+                        {% for i in donor_list %}
+                        <option value="{{i.donor_id}}">{{i.donor_id}}</option>
+                        {% endfor %}
+                    </datalist>
+                  <input type="text" name="reason" placeholder="REASON TO BLOCK">
+                <input type="submit" placeholder="BLOCK" value = "BLOCK">
+                </form>
+              </div> 
+            </details>
+           <details style="color: white;">
+             <summary>
+               UNBLOCK USER
+              </summary>
+              <div style="color: white; width: 50%; margin: 0 25%;">
+                <form action="/admin_homepage" method="POST" style="color: white;">
+                  <input type="hidden"  name="identifier" value="unblock_form" >
+                  <input type="text" name="user" list="blocked_list" placeholder="DONOR TO BE UNBLOCKED">
+                      <datalist id="blocked_list" >
+                          {% for i in blocked_list %}
+                          <option value="{{i.donor_id}}">{{i.donor_id}}</option>
+                          {% endfor %}
+                      </datalist>
+                  <input type="submit" value = "UNBLOCK">
+                </form>
+              </div>
+           </details>
+           <!-- <br> -->
+           <details style="color: white;">
+             <summary>ADD MEDICINE</summary>
+             <form action="/admin_homepage" method="POST">
+               <!-- med_id="01",med_name="Amoxicillin"med_effects="Nausea" med_class="Antibiotics" -->
+             </form>
+           </details>
+           
+                
+            
+        </div>
+        
+      
+        
+            
+           
+            
+            
+        </div> <!-- end right-container -->
+    
+    </div> <!-- end main-container -->
+<br><br><br><br>
 </body>
 </html>

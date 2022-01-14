@@ -2,9 +2,10 @@ from enum import unique
 import re
 import random
 from datetime import date
-from flask import Flask,render_template,request,url_for, redirect
+from flask import Flask,render_template,request,url_for, redirect,flash
 from flask.sessions import NullSession
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 from flask_login import UserMixin,LoginManager,login_user,login_required,logout_user,current_user
 app = Flask(__name__)
@@ -108,7 +109,7 @@ class Requestor(db.Model):
 class BlockedUsers(db.Model):
     donor_id=db.Column(db.String(10),db.ForeignKey(Donor.donor_id),primary_key=True)
     block_reason=db.Column(db.String(20),nullable=False)
-    block_date=db.Column(db.DateTime,nullable=False)
+    block_date=db.Column(db.String(15),nullable=False)
     admin_id=db.Column(db.Integer,db.ForeignKey(Admins.admin_id),nullable=False)
 
 # create table Medicine(
@@ -166,7 +167,7 @@ class DonatedMedicine(db.Model):
 class DeliveredMedicine(db.Model):
     delivery_id=db.Column(db.Integer,primary_key=True)
     request_id=db.Column(db.Integer,db.ForeignKey(RequestedMedicine.request_id),unique=True,nullable=False)
-    delivery_date=db.Column(db.DateTime,nullable=False)
+    delivery_date=db.Column(db.String(15),nullable=False)
     delivered_quantity=db.Column(db.Integer,nullable=False)
     donation_id=db.Column(db.Integer,db.ForeignKey(DonatedMedicine.donation_id),unique=True,nullable=False)
 
@@ -245,6 +246,16 @@ def donor_login():
 @app.route("/admin_login", methods=['GET', 'POST'])
 def admin_login():
     logout_user()
+    if request.method=="POST":
+        username=request.form['id']
+        password=request.form['password']
+        admin= Admins.query.filter_by(admin_id=username).first()
+        if(admin is not None):
+            user=users.query.filter_by(id=username).first()
+            useremail=UserEmail.query.filter_by(email_id=user.email_id).first()
+            if useremail.password==password:
+                login_user(user)
+                return redirect(url_for('admin_homepage'))
     return render_template("admin_login.html")
 
 @app.route("/ngo_login", methods=['GET', 'POST'])
@@ -269,96 +280,113 @@ def signup():
 @app.route("/donor_signup", methods=['GET', 'POST'])
 def donor_signup():
     if request.method=="POST":
-        email=request.form['email']
-        username=request.form['username']
-        password=request.form['password']
-        mobile=request.form['mobile']
-        dob=request.form['dob']
-        unique_id=request.form['unique_id']
-        door_no=request.form['door_no']
-        street=request.form['street']
-        area=request.form['area']
-        city=request.form['city']
-        state=request.form['state']
-        pincode=request.form['pincode']
-        useremail=UserEmail(email_id=email,password=password)
-        db.session.add(useremail)
-        useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
-        db.session.add(useridentity)
-        q=Donor.query.all()
-        id="DON"+str(len(q)+1)
-        print("for testing id = ",id)
-        user=users(id=id,email_id=email,UniqueID=unique_id)
-        db.session.add(user)
-        useraddress=UserAddress(id=id,DoorNo=door_no,Street=street,Area=area,City=city,State=state,Pincode=pincode)
-        db.session.add(useraddress)
-        donor=Donor(donor_id=id,dob=str(dob))
-        db.session.add(donor)
-        db.session.commit()
-        return render_template("donor_signup.html",id=id)
+        try:
+            email=request.form['email']
+            username=request.form['username']
+            password=request.form['password']
+            mobile=request.form['mobile']
+            dob=request.form['dob']
+            unique_id=request.form['unique_id']
+            door_no=request.form['door_no']
+            street=request.form['street']
+            area=request.form['area']
+            city=request.form['city']
+            state=request.form['state']
+            pincode=request.form['pincode']
+            useremail=UserEmail(email_id=email,password=password)
+            db.session.add(useremail)
+            useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
+            db.session.add(useridentity)
+            q=Donor.query.all()
+            id="DON"+str(len(q)+1)
+            print("for testing id = ",id)
+            user=users(id=id,email_id=email,UniqueID=unique_id)
+            db.session.add(user)
+            useraddress=UserAddress(id=id,DoorNo=door_no,Street=street,Area=area,City=city,State=state,Pincode=pincode)
+            db.session.add(useraddress)
+            donor=Donor(donor_id=id,dob=str(dob))
+            db.session.add(donor)
+            db.session.commit()
+            return render_template("donor_signup.html",id=id)
+        except:
+            db.session.rollback()
+            flash("Given details already exists")
+            return render_template("requestor_signup.html",id="")
+        
     return render_template("donor_signup.html",id="")
 
 @app.route("/requestor_signup", methods=['GET', 'POST'])
 def requestor_signup():
     if request.method=="POST":
-        email=request.form['email']
-        username=request.form['username']
-        password=request.form['password']
-        mobile=request.form['mobile']
-        dob=request.form['dob']
-        unique_id=request.form['unique_id']
-        door_no=request.form['door_no']
-        street=request.form['street']
-        area=request.form['area']
-        city=request.form['city']
-        state=request.form['state']
-        pincode=request.form['pincode']
-        useremail=UserEmail(email_id=email,password=password)
-        db.session.add(useremail)
-        useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
-        db.session.add(useridentity)
-        q=Requestor.query.all()
-        id="REQ"+str(len(q)+1)
-        print("for testing id = ",id)
-        user=users(id=id,email_id=email,UniqueID=unique_id)
-        db.session.add(user)
-        useraddress=UserAddress(id=id,DoorNo=door_no,Street=street,Area=area,City=city,State=state,Pincode=pincode)
-        db.session.add(useraddress)
-        requestor=Requestor(requestor_id=id,dob=str(dob))
-        db.session.add(requestor)
-        db.session.commit()
-        return render_template("requestor_signup.html",id=id)
+        try:
+            email=request.form['email']
+            username=request.form['username']
+            password=request.form['password']
+            mobile=request.form['mobile']
+            dob=request.form['dob']
+            unique_id=request.form['unique_id']
+            door_no=request.form['door_no']
+            street=request.form['street']
+            area=request.form['area']
+            city=request.form['city']
+            state=request.form['state']
+            pincode=request.form['pincode']
+            useremail=UserEmail(email_id=email,password=password)
+            db.session.add(useremail)
+            useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
+            db.session.add(useridentity)
+            q=Requestor.query.all()
+            id="REQ"+str(len(q)+1)
+            print("for testing id = ",id)
+            user=users(id=id,email_id=email,UniqueID=unique_id)
+            db.session.add(user)
+            useraddress=UserAddress(id=id,DoorNo=door_no,Street=street,Area=area,City=city,State=state,Pincode=pincode)
+            db.session.add(useraddress)
+            requestor=Requestor(requestor_id=id,dob=str(dob))
+            db.session.add(requestor)
+            db.session.commit()
+            return render_template("requestor_signup.html",id=id)
+        except:
+            db.session.rollback()
+            flash("Given details already exists")
+            return render_template("requestor_signup.html",id="")
     return render_template("requestor_signup.html",id="")
 
 @app.route("/ngo_signup", methods=['GET', 'POST'])
 def ngo_signup():
     if request.method=="POST":
-        email=request.form['email']
-        username=request.form['username']
-        password=request.form['password']
-        mobile=request.form['mobile']
-        unique_id=request.form['unique_id']
-        door_no=request.form['door_no']
-        street=request.form['street']
-        area=request.form['area']
-        city=request.form['city']
-        state=request.form['state']
-        pincode=request.form['pincode']
-        useremail=UserEmail(email_id=email,password=password)
-        db.session.add(useremail)
-        useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
-        db.session.add(useridentity)
-        q=NGO.query.all()
-        id="NGO"+str(len(q)+1)
-        print("for testing id = ",id)
-        user=users(id=id,email_id=email,UniqueID=unique_id)
-        db.session.add(user)
-        useraddress=UserAddress(id=id,DoorNo=door_no,Street=street,Area=area,City=city,State=state,Pincode=pincode)
-        db.session.add(useraddress)
-        ngo=NGO(NGO_id=id)
-        db.session.add(ngo)
-        db.session.commit()
-        return render_template("ngo_signup.html",id=id)
+        try:
+            email=request.form['email']
+            username=request.form['username']
+            password=request.form['password']
+            mobile=request.form['mobile']
+            unique_id=request.form['unique_id']
+            door_no=request.form['door_no']
+            street=request.form['street']
+            area=request.form['area']
+            city=request.form['city']
+            state=request.form['state']
+            pincode=request.form['pincode']
+            useremail=UserEmail(email_id=email,password=password)
+            db.session.add(useremail)
+            useridentity=UserIdentity(UniqueID=unique_id,user_name=username,mobile=mobile)
+            db.session.add(useridentity)
+            q=NGO.query.all()
+            id="NGO"+str(len(q)+1)
+            print("for testing id = ",id)
+            user=users(id=id,email_id=email,UniqueID=unique_id)
+            db.session.add(user)
+            useraddress=UserAddress(id=id,DoorNo=door_no,Street=street,Area=area,City=city,State=state,Pincode=pincode)
+            db.session.add(useraddress)
+            ngo=NGO(NGO_id=id)
+            db.session.add(ngo)
+            db.session.commit()
+            return render_template("ngo_signup.html",id=id)
+        except:
+            db.session.rollback()
+            flash("Given details already exists")
+            return render_template("requestor_signup.html",id="")
+        
     return render_template("ngo_signup.html",id="")
 
 @app.route("/user_profile")
@@ -453,10 +481,84 @@ def ngo_homepage():
     else:
         return render_template("forbidden.html")
 
-@app.route("/admin_homepage")
+@app.route("/admin_homepage", methods=['GET', 'POST'])
 @login_required
 def admin_homepage():
-    return render_template("admin_homepage.html",id=current_user.get_id())
+    id=str(current_user.get_id())
+    if id[:3]=="ADM":
+        if request.method=="POST":
+            if request.form['identifier']=="form1":
+                request_id=request.form['request_id']
+                if request.form['submit_button']=="accept":
+                    f=str(str(request_id)+" request "+"accepted")
+                    flash(f)
+                elif request.form['submit_button']=="reject":
+                    f=str(str(request_id)+" request "+"rejected")
+                    flash(f)
+            elif request.form['identifier']=="form2":
+                donation_id=request.form['donation_id']
+                if request.form['submit_button']=="accept":
+                    f=str(str(donation_id)+" donation "+"accepted")
+                    flash(f)
+                elif request.form['submit_button']=="reject":
+                    f=str(str(donation_id)+" donation "+"rejected")
+                    flash(f)
+            elif request.form['identifier']=="block_form":
+                try:
+                    donor_id=request.form['user']
+                    try:
+                        if Donor.query.filter_by(donor_id=donor_id)[0] is not None:
+                            block_reason=request.form['reason']
+                            block_date=str(date.today())
+                            admin_id=current_user.get_id()
+                            block=BlockedUsers(donor_id=donor_id,block_reason=block_reason,block_date=block_date,admin_id=admin_id)
+                            db.session.add(block)
+                            db.session.commit()
+                            f="Donor "+str(donor_id)+" blocked"
+                            flash(f)
+                    except:
+                        # To clear blocked users table uncomment below line
+                        # s=BlockedUsers.query.all()
+                        # for i in s:
+                        #     db.session.delete(i)
+                        # db.session.commit()
+                        db.session.rollback()
+                        flash("The donor does not exist")
+                    
+                except IntegrityError:
+                    db.session.rollback()
+                    flash("The user is already blocked")
+                
+            elif request.form['identifier']=="unblock_form":
+                try:
+                    donor_id=request.form['user']
+                    user=BlockedUsers.query.filter_by(donor_id=donor_id).first()
+                    db.session.delete(user)
+                    db.session.commit()
+                    f="Donor "+str(donor_id)+" unblocked"
+                    flash(f)
+                except:
+                    db.session.rollback()
+                    flash("The user is already unblocked")
+                    
+        req_list=RequestedMedicine.query.all()
+        don_list=DonatedMedicine.query.all()
+        donor_list=Donor.query.all()
+        blocked_list=BlockedUsers.query.all()
+        # count_donor=len(donor_list)
+        # count_requestor=len(Requestor.query.all())
+        # count_blocked=len(blocked_list)
+        # count_ngo=len(NGO.query.all())
+        # total=count_donor+count_requestor+count_ngo
+        # perc_donor=( (count_donor-count_blocked)/total)*100
+        # perc_requestor=count_requestor*100/total
+        # perc_blocked=count_blocked*100/total
+        # perc_ngo=count_ngo*100/total
+        admin_details=users.query.filter_by(id=id)  
+        return render_template("admin_homepage.html",id=current_user.get_id(),req_list=req_list,don_list=don_list,donor_list=donor_list,blocked_list=blocked_list,admin_details=admin_details)
+    else:
+        return render_template("forbidden.html")
+
 
 
 
@@ -581,6 +683,18 @@ def medinit():
         db.session.add(medclass)
         medclass=MedicineClass(med_id="12",med_class="Antidiabetics")
         db.session.add(medclass)
+        db.session.commit()
+
+        adminemail=UserEmail(email_id="admin1@gmail.com",password="admin1")
+        db.session.add(adminemail)
+        adminidentity=UserIdentity(UniqueID="000000000000",user_name="ADMIN 1",mobile="0000000000")
+        db.session.add(adminidentity)
+        admin=users(id="ADM1",email_id="admin1@gmail.com",UniqueID="00000000000000")
+        db.session.add(admin)
+        adminaddress=UserAddress(id="ADM1",DoorNo="admin",Street="admin",Area="admin",City="admin",State="admin",Pincode="000000")
+        db.session.add(adminaddress)
+        admin=Admins(admin_id="ADM1",admin_desig="manager")
+        db.session.add(admin)
         db.session.commit()
     
 

@@ -43,6 +43,10 @@
 			<a href="/ngo_homepage">PROFILE</a>
 			<a href="/logout">LOG OUT</a>
 			{% endif %}
+			{% if id[:3]=="ADM"%}
+			<a href="/admin_homepage">PROFILE</a>
+			<a href="/logout">LOG OUT</a>
+			{% endif %}
 			{% endif %}
 			
 		</div>

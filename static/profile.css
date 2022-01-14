@@ -59,6 +59,19 @@ body{
 body {
 	background: #1f253d;
 }
+html{
+	scroll-behavior: smooth;
+}
+::selection{
+	background-color:#394264;
+}
+::-webkit-scrollbar{
+	width:10px;
+	background-color:#394264;
+}
+::-webkit-scrollbar-thumb{
+	background-color:#2f2f2f;
+}
 
 ul {
 	list-style-type: none;
@@ -97,6 +110,10 @@ h1, h2, p, a, span{
 
 .input-container {
 	position: relative;
+}
+details > summary{
+	font-size: 30px;
+	font-family: 'Courier New', Courier, monospace;
 }
 	input,select{
 		width: 80%;

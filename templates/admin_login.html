@@ -209,13 +209,13 @@
 </nav>
   <div class="container" id="container">
     <div class="form-container sign-in-container">
-        <form action="#">
+        <form action="/admin_login" method="POST">
             <h1>Admin Login </h1>
             <br>
-            <input type="email" placeholder="Username" />
-            <input type="password" placeholder="Password" />
+            <input type="text" name="id" placeholder="Username" />
+            <input type="password" name="password" placeholder="Password" />
             <a href="#">Forgot your password?</a>
-            <a class="button" href="/admin_homepage">Log in</a>
+            <button type="submit" >Login</button>
         </form>
     </div>
   </div>
