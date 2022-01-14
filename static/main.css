@@ -127,7 +127,7 @@ html{
 	transition: .2s linear;
 }
 .sm a:hover{
-	color:white;
+	color:black;
 }
 #home .buttons{
 	margin-top: 60;
@@ -346,10 +346,16 @@ transform: translateY(-50%);
 	cursor:pointer;
 	transition: .3s linear;
 }
+.contact-info .item:hover{
+	color: red;
+}
 .contact-info ion-icon{
 	font-size:40px;
 	line-height:120px;
 	height:100px;
+}
+.contact-info ion-icon:hover{
+	color: red;
 }
 .contact-info .item:hover{
 	background-color:red,
