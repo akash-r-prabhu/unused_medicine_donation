@@ -401,15 +401,19 @@ def donor_homepage():
     if id[:3]=="DON":
         med=Medicine.query.all()  
         if request.method=="POST":
-            medicine=request.form['medicine']
-            quantity=request.form['quantity']
-            expirydate=request.form['expirydate']
-            q=DonatedMedicine.query.all()
-            donation_id=len(q)+1
-            donmed=DonatedMedicine(donation_id=donation_id,med_id=medicine,donation_expiry=expirydate,donation_quantity=quantity,donor_id=current_user.get_id())
-            db.session.add(donmed)
-            db.session.commit()
-
+            d=BlockedUsers.query.filter_by(donor_id=id).first()
+            try:
+                if d.donor_id==id:
+                    flash("You are blocked")
+            except:
+                medicine=request.form['medicine']
+                quantity=request.form['quantity']
+                expirydate=request.form['expirydate']
+                q=DonatedMedicine.query.all()
+                donation_id=len(q)+1
+                donmed=DonatedMedicine(donation_id=donation_id,med_id=medicine,donation_expiry=expirydate,donation_quantity=quantity,donor_id=current_user.get_id())
+                db.session.add(donmed)
+                db.session.commit()
         prev_donations=DonatedMedicine.query.filter_by(donor_id=id) 
         donor_details=users.query.filter_by(id=id)  
         user_identity=UserIdentity.query.filter_by(UniqueID=donor_details[0].UniqueID) 
@@ -540,22 +544,44 @@ def admin_homepage():
                 except:
                     db.session.rollback()
                     flash("The user is already unblocked")
+
+            elif request.form['identifier']=="add_medicine":
+                try:
+                    med_name=request.form["med_name"]
+                    med_effects=request.form["med_effects_list"]
+                    l=med_effects.split(",")
+                    med_class=request.form["med_class"]
+                    j=med_class.split(",")
+                    med_id=str(len(Medicine.query.all())+1)                      
+                    med=Medicine(med_id=med_id,med_name=med_name)
+                    db.session.add(med)
+                    for i in l:
+                        effects=MedicineEffects(med_id=med_id,med_effects=i)
+                        db.session.add(effects)
+                    for i in j:
+                        medclass=MedicineClass(med_id=med_id,med_class=i)
+                        db.session.add(medclass)
+                    db.session.commit()
+                except:
+                    db.session.rollback()
+                    flash("Medicine already exist")
                     
         req_list=RequestedMedicine.query.all()
         don_list=DonatedMedicine.query.all()
         donor_list=Donor.query.all()
         blocked_list=BlockedUsers.query.all()
-        # count_donor=len(donor_list)
-        # count_requestor=len(Requestor.query.all())
-        # count_blocked=len(blocked_list)
-        # count_ngo=len(NGO.query.all())
+        count_donor=len(donor_list)
+        count_requestor=len(Requestor.query.all())
+        count_blocked=len(blocked_list)
+        count_ngo=len(NGO.query.all())
+        del_list=DeliveredMedicine.query.all()
         # total=count_donor+count_requestor+count_ngo
         # perc_donor=( (count_donor-count_blocked)/total)*100
         # perc_requestor=count_requestor*100/total
         # perc_blocked=count_blocked*100/total
         # perc_ngo=count_ngo*100/total
         admin_details=users.query.filter_by(id=id)  
-        return render_template("admin_homepage.html",id=current_user.get_id(),req_list=req_list,don_list=don_list,donor_list=donor_list,blocked_list=blocked_list,admin_details=admin_details)
+        return render_template("admin_homepage.html",id=current_user.get_id(),req_list=req_list,don_list=don_list,donor_list=donor_list,blocked_list=blocked_list,admin_details=admin_details,count_donor=count_donor,count_requestor=count_requestor,count_ngo=count_ngo,count_blocked=count_blocked,available_med=len(don_list)-len(del_list))
     else:
         return render_template("forbidden.html")
 

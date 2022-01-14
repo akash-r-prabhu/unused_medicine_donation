@@ -10,7 +10,7 @@
     <div class="main-container"style=" width:99vw;">
 
         <!-- HEADER -->
-        <header class="block" style="margin-left:0.5vw;">
+        <header class="block" style="margin-left:0.5vw;margin-top:0.5vw;">
             <ul class="header-menu horizontal-list">
                 <li>
                     <a class="header-menu-tab" href="/"><span class="icon entypo-cog scnd-font-color"></span>Home</a>
@@ -28,6 +28,7 @@
                     <a class="header-menu-tab" href="/logout">Logout</a>
                 </li>
             </ul>
+            
             <div class="profile-menu">
                 <!-- <p>Me <a href="#26"><span class="entypo-down-open scnd-font-color"></span></a></p> -->
                 <!-- <div class="profile-picture small-profile-picture">
@@ -36,37 +37,14 @@
             </div>
         </header>
 
-        <!-- LEFT-CONTAINER -->
-        <div >
-            <div > 
-                <!-- <h2 class="titular">MENU BOX</h2> -->
-                <!-- <ul class="menu-box-menu">
-                    <li>
-                        <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages<div class="menu-box-number">24</div></a>                            
-                    </li>
-                    <li>
-                        <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites<div class="menu-box-number">3</div></a>                            
-                    </li>
-                    <li>
-                        <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events<div class="menu-box-number">5</div></a>                            
-                    </li>
-                    <li>
-                        <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account Settings</a>
-                    </li>                     
-                </ul> -->
+        {% for i in get_flashed_messages() %}
+          <div class="flex bg-green-100 rounded-lg p-4 mb-4 text-sm text-green-700" role="alert">
+            <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <div>
+                <span class="font-medium" style="color: black;">{{i}}</span> 
             </div>
-          
-            <div> <!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
-                <div >
-                  <!-- LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
-                    <div >
-                       
-                    </div>
-                    <!-- END LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
-                </div>
-                
-            </div>
-            </div>
+        </div>
+          {% endfor %}
         <div class="left-container container">
           <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
             <br>
@@ -81,28 +59,32 @@
                 <p class="scnd-font-color">Email id : {{admin_details[0].email_id}}</p>
                 <p class="scnd-font-color">Unique id : {{admin_details[0].UniqueID}}</p>
             </div>
+            <br>
+            <div style="margin-left: 30px; font-size: 20px;">
+              <h1 style="text-decoration: underline;">Database Summary </h1>
+            <p >Total Active Requests : {{req_list|count}}</p>
+            <p >Total donations : {{don_list|count}}</p>
+            <p >Total Donors : {{count_donor}}</p>
+            <p >Total Requestors : {{count_requestor}}</p>
+            <p >Total NGO's : {{count_ngo}}</p>
+            <p >Total Blocked Users : {{count_blocked}}</p>
+            <p >Total Available Medicines : {{available_med}}</p>
+          </div>
             
         </div>
 
-          {% for i in get_flashed_messages() %}
-          <div class="flex bg-green-100 rounded-lg p-4 mb-4 text-sm text-green-700" role="alert">
-            <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-            <div>
-                <span class="font-medium" style="color: black;">{{i}}</span> 
-            </div>
-        </div>
-          {% endfor %}
-          <h1>Active medicine requests</h1>
+          
+          <h1>ACTIVE MEDICINE REQUESTS</h1>
           <table class="min-w-full border-collapse block md:table">
             <thead class="block md:table-header-group">
               <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Request ID</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Med ID</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Need Date</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Requested Date</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Quantity</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Requestor ID</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >Action</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >REQUEST ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >MEDICINE ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >LAST DATE OF REQUIREMENT</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >REQUESTED DATE</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >QUANTITY REQUESTED</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >REQUESTOR ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >ACTION</th>
                 
 
               </tr>
@@ -121,8 +103,8 @@
                   <form action="/admin_homepage" method="POST">
                   <input type="hidden"  name="identifier" value="form1" >
                   <input type="hidden" name="request_id" value="{{i.request_id}}">
-                  <button type="submit" name="submit_button" value="accept"  class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Accept</button>
-                  <button type="submit" name="submit_button" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Reject</button>
+                  <button type="submit" name="submit_button" value="accept"  class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">ACCEPT</button>
+                  <button type="submit" name="submit_button" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">REJECT</button>
                 </form>
                 </td>
               </tr>
@@ -133,16 +115,16 @@
           </table>
 
 
-          <h1>Active donation requests</h1>
+          <h1>ACTIVE DONATION REQUESTS</h1>
           <table class="min-w-full border-collapse block md:table">
             <thead class="block md:table-header-group">
               <tr class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Donation ID</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Med ID</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Expiry</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Quantity</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Donor ID</th>
-                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >Action</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >DONATION ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >MEDICINE ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >DATE OF EXPIRY</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >QUANTITY DONATED</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >DONOR ID</th>
+                <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >ACTION</th>
                 
 
               </tr>
@@ -160,8 +142,8 @@
                   <form action="/admin_homepage" method="POST">
                     <input type="hidden"  name="identifier" value="form2" >
                     <input type="hidden" name="donation_id" value="{{i.donation_id}}">
-                  <button type="submit" name="submit_button" value="accept" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Accept</button>
-                  <button type="submit" name="submit_button" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Reject</button>
+                  <button type="submit" name="submit_button" value="accept" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">ACCEPT</button>
+                  <button type="submit" name="submit_button" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">REJECT</button>
                 </form>
                 </td>
               </tr>
@@ -170,6 +152,7 @@
               		
             </tbody>
           </table>
+
 
 
         </div>
@@ -215,7 +198,12 @@
            <details style="color: white;">
              <summary>ADD MEDICINE</summary>
              <form action="/admin_homepage" method="POST">
+              <input type="hidden"  name="identifier" value="add_medicine" >
                <!-- med_id="01",med_name="Amoxicillin"med_effects="Nausea" med_class="Antibiotics" -->
+               <input type="text" name="med_name" placeholder="Medicine name">
+               <input type="text" name="med_effects_list" placeholder="Medicine Effects">
+               <input type="text" name="med_class" placeholder="Class of medicine">
+               <input type="submit" >
              </form>
            </details>
            

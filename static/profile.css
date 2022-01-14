@@ -137,6 +137,9 @@ details > summary{
 		padding: 6px 12px;
 		cursor: pointer;
 	} */
+	input[type="text"]{
+		cursor:text;
+	} 
 	
 	input[type="file"] {
 		/* margin-top: 3px; */
