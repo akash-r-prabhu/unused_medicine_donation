@@ -491,23 +491,23 @@ def admin_homepage():
     id=str(current_user.get_id())
     if id[:3]=="ADM":
         if request.method=="POST":
-            if request.form['identifier']=="form1":
-                request_id=request.form['request_id']
-                if request.form['submit_button']=="accept":
-                    f=str(str(request_id)+" request "+"accepted")
-                    flash(f)
-                elif request.form['submit_button']=="reject":
-                    f=str(str(request_id)+" request "+"rejected")
-                    flash(f)
-            elif request.form['identifier']=="form2":
-                donation_id=request.form['donation_id']
-                if request.form['submit_button']=="accept":
-                    f=str(str(donation_id)+" donation "+"accepted")
-                    flash(f)
-                elif request.form['submit_button']=="reject":
-                    f=str(str(donation_id)+" donation "+"rejected")
-                    flash(f)
-            elif request.form['identifier']=="block_form":
+            # if request.form['identifier']=="form1":
+            #     request_id=request.form['request_id']
+            #     if request.form['submit_button']=="accept":
+            #         f=str(str(request_id)+" request "+"accepted")
+            #         flash(f)
+            #     elif request.form['submit_button']=="reject":
+            #         f=str(str(request_id)+" request "+"rejected")
+            #         flash(f)
+            # elif request.form['identifier']=="form2":
+            #     donation_id=request.form['donation_id']
+            #     if request.form['submit_button']=="accept":
+            #         f=str(str(donation_id)+" donation "+"accepted")
+            #         flash(f)
+            #     elif request.form['submit_button']=="reject":
+            #         f=str(str(donation_id)+" donation "+"rejected")
+            #         flash(f)
+            if request.form['identifier']=="block_form":
                 try:
                     donor_id=request.form['user']
                     try:
@@ -565,6 +565,24 @@ def admin_homepage():
                 except:
                     db.session.rollback()
                     flash("Medicine already exist")
+            elif request.form['identifier']=="deliver":
+                try:
+                    request_id=request.form["request_id"]
+                    delivery_date=request.form["delivery_date"]
+                    delivered_quantity=request.form["delivered_quantity"]
+                    donation_id=request.form["donation_id"]
+                    t=DeliveredMedicine.query.all()
+                    delivery_id=len(t)+1
+                    deliv=DeliveredMedicine(delivery_id=delivery_id,request_id=request_id,delivery_date=str(delivery_date),delivered_quantity=delivered_quantity,donation_id=donation_id)
+                    db.session.add(deliv)
+                    db.session.commit()
+                except IntegrityError:
+                    db.session.rollback()
+                    flash("Delivery already done")
+                except:
+                    db.session.rollback()
+                    flash("Details entered are wrong")
+
                     
         req_list=RequestedMedicine.query.all()
         don_list=DonatedMedicine.query.all()
@@ -581,7 +599,10 @@ def admin_homepage():
         # perc_blocked=count_blocked*100/total
         # perc_ngo=count_ngo*100/total
         admin_details=users.query.filter_by(id=id)  
-        return render_template("admin_homepage.html",id=current_user.get_id(),req_list=req_list,don_list=don_list,donor_list=donor_list,blocked_list=blocked_list,admin_details=admin_details,count_donor=count_donor,count_requestor=count_requestor,count_ngo=count_ngo,count_blocked=count_blocked,available_med=len(don_list)-len(del_list))
+        l=list()
+        for i in del_list:
+            l.append(i.request_id)
+        return render_template("admin_homepage.html",id=current_user.get_id(),req_list=req_list,don_list=don_list,donor_list=donor_list,blocked_list=blocked_list,admin_details=admin_details,count_donor=count_donor,count_requestor=count_requestor,count_ngo=count_ngo,count_blocked=count_blocked,available_med=len(don_list)-len(del_list),l=l)
     else:
         return render_template("forbidden.html")
 
@@ -728,4 +749,4 @@ if __name__=="__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     medinit()
-    app.run(debug=False,host="0.0.0.0")
+    app.run(debug=True,host="0.0.0.0")
