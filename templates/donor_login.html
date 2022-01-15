@@ -185,6 +185,8 @@
         text-decoration: none;
       }
     </style>
+    <title>DONOR LOGIN</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
   </head>
   <nav class="navbar" style="top: 1;" >
 		<div class="inner-width">
@@ -209,8 +211,8 @@
         <form action="/donor_login" method="POST">
             <h1>DONOR LOGIN</h1>
             <br>
-            <input type="text" name="id" required = "required" placeholder="DONOR ID" />
-            <input type="password" name="password" required = "required" placeholder="PASSWORD" />
+            <input type="text" name="id" required  placeholder="DONOR ID" />
+            <input type="password" name="password"  required placeholder="PASSWORD" />
             <a href="#">Forgot your password?</a>
             <button type="submit" id="requestmed">LOG IN</button>
         </form>

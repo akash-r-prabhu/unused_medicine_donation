@@ -54,7 +54,7 @@
       button {
         border-radius: 20px;
         border: 1px solid #ff4b2b;
-        background-color: #ff4b2b;
+        background-color: #ff4b2b; 
         color: #ffffff;
         font-size: 12px;
         font-weight: bold;
@@ -63,6 +63,10 @@
         text-transform: uppercase;
         transition: transform 80ms ease-in;
         width: 240px;
+      }
+
+      button:hover {
+        background-color: #ff416c;
       }
 
       button:active {
@@ -187,6 +191,8 @@
         text-decoration: none;
       }
     </style>
+    <title>LOGIN</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
   </head>
   <body>
     <nav class="navbar" style="top: 1;" >
@@ -240,7 +246,11 @@
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
                     <h1>Hello, Friend!</h1>
+<<<<<<< HEAD
                     <p>Enter your personal details and start journey with us...</p>
+=======
+                    <p>Enter your personal details and start the journey with us</p>
+>>>>>>> 5522a463bc78684936e35d29a97cd6bffaa2e3a0
                     <a href="/signup"><button class="ghost" id="signUp">SIGN UP</button></a>
                 </div>
             </div>
