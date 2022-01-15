@@ -29,51 +29,27 @@
                 </li>
             </ul>
             <div class="profile-menu">
-                <!-- <p>Me <a href="#26"><span class="entypo-down-open scnd-font-color"></span></a></p> -->
-                <!-- <div class="profile-picture small-profile-picture">
-                    <img src="{{ url_for('static', filename='logo1.jpg') }}" class="logo"></img>
-                </div> -->
             </div>
         </header>
 
         <!-- LEFT-CONTAINER -->
         <div >
             <div > 
-                <!-- <h2 class="titular">MENU BOX</h2> -->
-                <!-- <ul class="menu-box-menu">
-                    <li>
-                        <a class="menu-box-tab" href="#6"><span class="icon fontawesome-envelope scnd-font-color"></span>Messages<div class="menu-box-number">24</div></a>                            
-                    </li>
-                    <li>
-                        <a class="menu-box-tab" href="#8"><span class="icon entypo-paper-plane scnd-font-color"></span>Invites<div class="menu-box-number">3</div></a>                            
-                    </li>
-                    <li>
-                        <a class="menu-box-tab" href="#10"><span class="icon entypo-calendar scnd-font-color"></span>Events<div class="menu-box-number">5</div></a>                            
-                    </li>
-                    <li>
-                        <a class="menu-box-tab" href="#12"><span class="icon entypo-cog scnd-font-color"></span>Account Settings</a>
-                    </li>                     
-                </ul> -->
             </div>
-            <div > <!-- DONUT CHART BLOCK (LEFT-CONTAINER) -->
+            <div >
                 <div >
-                    <!-- DONUT-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
                     <div id="porcion1" class="recorte"><div class="quesito ios" data-rel="21"></div></div>
                     <div id="porcion2" class="recorte"><div class="quesito mac" data-rel="39"></div></div>
                     <div id="porcion3" class="recorte"><div class="quesito win" data-rel="31"></div></div>
                     <div id="porcionFin" class="recorte"><div class="quesito linux" data-rel="9"></div></div>
-                    <!-- END DONUT-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->    
-                    <!-- <p class="center-date"><br><span class="scnd-font-color">2021</span></p>  -->
                 </div>
                 
             </div>
-            <div> <!-- LINE CHART BLOCK (LEFT-CONTAINER) -->
+            <div>
                 <div >
-                  <!-- LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
                     <div >
                        
                     </div>
-                    <!-- END LINE-CHART by @kseso https://codepen.io/Kseso/pen/phiyL -->
                 </div>
                 
             </div>
@@ -115,7 +91,6 @@
                 {%for i in prev_requests%}
                 <div class="tweet first" style = "line-height: 1.5;">
                     <p>REQUEST ID : {{i.request_id}} <br><br>MEDICINE ID : {{i.med_id}}<br>LAST DATE OF REQUIREMENT : {{i.need_date}}<br>QUANTITY : {{i.requested_quantity}}<br>DATE OF REQUEST : {{i.requested_date}}<a class="tweet-link" href="#17"></a></p>
-                    <!-- <p><a class="time-ago scnd-font-color" href="#18">3 minutes ago</a></p> -->
                 </div>
                 {% endfor %}
                 
@@ -126,7 +101,6 @@
                     {%for i in prev_donations%}
                     <div class="tweet first">
                         <p>Donation ID : {{i.donation_id}} <br><br>Med ID : {{i.med_id}}<br>Donation Expiry : {{i.donation_expiry}}<br>Quantity: {{i.donation_quantity}}<br><a class="tweet-link" href="#17"></a></p>
-                        <!-- <p><a class="time-ago scnd-font-color" href="#18">3 minutes ago</a></p> -->
                     </div>
                     {% endfor %}
                     

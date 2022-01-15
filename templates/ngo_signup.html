@@ -7,11 +7,7 @@
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
   
   <title>NGO SIGN UP</title>
-<<<<<<< HEAD
   <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
-=======
-<link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
->>>>>>> 5522a463bc78684936e35d29a97cd6bffaa2e3a0
 </head>
 <body>
 
@@ -67,7 +63,6 @@
       <form action="/ngo_signup" method="POST">
         <div class="mb-4">
           <label class="block mb-1" for="email">EMAIL ID</label>
-<<<<<<< HEAD
           <input id="email" type="text" name="email" required = "required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$" class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
         </div>
         <div class="mb-4">
@@ -81,29 +76,9 @@
         <div class="mb-4">
           <label class="block mb-1" for="mobile">MOBILE</label>
           <input id="mobile" type="text" name="mobile" required = "required" pattern="[789][0-9]{9}" class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-=======
-          <input id="email" type="text" name="email" required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
         </div>
-        <div class="mb-4">
-          <label class="block mb-1" for="username">NAME</label>
-          <input id="username" type="text" name="username"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1" for="password">PASSWORD</label>
-          <input id="password" type="password" name="password"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1" for="mobile">MOBILE</label>
-          <input id="mobile" type="text" name="mobile"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
->>>>>>> 5522a463bc78684936e35d29a97cd6bffaa2e3a0
-        </div>
-        <!-- <div class="mb-4">
-          <label class="block mb-1" for="dob">DOB</label>
-          <input id="dob" type="date" name="dob" class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-        </div> -->
         <div class="mb-4">
           <label class="block mb-1" for="unique_id">NGO ID</label>
-<<<<<<< HEAD
           <input id="unique_id" type="text" name="unique_id" required = "required" class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
         </div>
         <div class="mb-4">
@@ -129,33 +104,6 @@
         <div class="mb-4">
           <label class="block mb-1" for="pincode">PIN CODE</label>
           <input id="pincode" type="text" name="pincode" required = "required" class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-=======
-          <input id="unique_id" type="text" name="unique_id"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1" for="door_no">DOOR NUMBER</label>
-          <input id="door_no" type="text" name="door_no"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1" for="street">STREET</label>
-          <input id="street" type="text" name="street"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1" for="area">AREA</label>
-          <input id="area" type="text" name="area"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1" for="city">CITY</label>
-          <input id="city" type="text" name="city"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1" for="state">STATE</label>
-          <input id="state" type="text" name="state"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
-        </div>
-        <div class="mb-4">
-          <label class="block mb-1" for="pincode">PIN CODE</label>
-          <input id="pincode" type="text" name="pincode"  required class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full" />
->>>>>>> 5522a463bc78684936e35d29a97cd6bffaa2e3a0
         </div>
 
 
@@ -170,12 +118,6 @@
         <div class="mt-6">
           <button class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-red-700 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 disabled:opacity-25 transition">SIGN UP</button>
         </div>
-<<<<<<< HEAD
-=======
-        <!-- <div class="mt-6 text-center">
-          <a href="#" class="underline">Sign up for an account</a>
-        </div> -->
->>>>>>> 5522a463bc78684936e35d29a97cd6bffaa2e3a0
       </form>
     </div>
   </div>

@@ -32,11 +32,6 @@
             </ul>
             
             <div class="profile-menu">
-                <!-- <p>Me <a href="#26"><span class="entypo-down-open scnd-font-color"></span></a></p> -->
-                <!-- <div class="profile-picture small-profile-picture">
-                    <img src="{{ url_for('static', filename='logo1.jpg') }}" class="logo"></img>
-                </div> -->
-            </div>
         </header>
 
         {% for i in get_flashed_messages() %}
@@ -48,7 +43,7 @@
         </div>
           {% endfor %}
         <div class="left-container container">
-          <div class="profile block" style= "height: 80%"> <!-- PROFILE (MIDDLE-CONTAINER) -->
+          <div class="profile block" style= "height: 80%"> 
             <br>
             <div class="profile-picture big-profile-picture clear">
                 <img width="100%" width="100%" alt="Same picture" src="{{ url_for('static', filename='admin_avatar.jpeg') }}"  style="object-fit: cover;width: 150px;
@@ -86,9 +81,6 @@
                 <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >REQUESTED DATE</th>
                 <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >QUANTITY REQUESTED</th>
                 <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >REQUESTOR ID</th>
-                <!-- <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"   >ACTION</th> -->
-                
-
               </tr>
             </thead>
             <tbody class="block md:table-row-group">
@@ -101,15 +93,6 @@
                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Requested Date</span>{{i.requested_date}}</td>
                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Quantity</span>{{i.requested_quantity}}</td>
                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Requestor ID</span>{{i.requestor_id}}</td>
-                <!-- <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                  <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                  <form action="/admin_homepage" method="POST">
-                  <input type="hidden"  name="identifier" value="form1" >
-                  <input type="hidden" name="request_id" value="{{i.request_id}}">
-                  <button type="submit" name="submit_button" value="accept"  class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">ACCEPT</button>
-                  <button type="submit" name="submit_button" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">REJECT</button>
-                </form>
-                </td> -->
               </tr>
               {% endif %}
             {% endfor %}
@@ -128,9 +111,6 @@
                 <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >DATE OF EXPIRY</th>
                 <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >QUANTITY DONATED</th>
                 <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >DONOR ID</th>
-                <!-- <th class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell"  >ACTION</th> -->
-                
-
               </tr>
             </thead>
             <tbody class="block md:table-row-group">
@@ -143,8 +123,6 @@
                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Donor ID</span>{{i.donor_id}}</td>
               </tr>
             {% endfor %}
-              
-              		
             </tbody>
           </table>
 
@@ -189,12 +167,10 @@
                 </form>
               </div>
           </details>
-          <!-- <br> -->
           <details style="color: white;">
             <summary>ADD MEDICINE</summary>
             <form action="/admin_homepage" method="POST">
               <input type="hidden"  name="identifier" value="Add_medicine" >
-              <!-- med_id="01",med_name="Amoxicillin"med_effects="Nausea" med_class="Antibiotics" -->
               <input type="text" name="med_name" placeholder="Medicine name">
               <input type="text" name="med_effects_list" placeholder="Medicine Effects">
               <input type="text" name="med_class" placeholder="Class of medicine">
@@ -206,7 +182,6 @@
             <summary>UPDATE DELIVERED PAGES</summary>
             <form action="/admin_homepage" method="POST">
               <input type="hidden"  name="identifier" value="deliver" >
-              <!-- med_id="01",med_name="Amoxicillin"med_effects="Nausea" med_class="Antibiotics" -->
               <input type="text" name="request_id" placeholder="Request Id">
               <input type="date" name="delivery_date" placeholder="Delivery Date">
               <input type="text" name="delivered_quantity" placeholder="Quantity">
@@ -215,11 +190,8 @@
             </form>
           </details>
         </div>
-        
-      
-        </div> <!-- end right-container -->
-    
-    </div> <!-- end main-container -->
-<br><br><br><br>
-</body>
+        </div>
+    </div> 
+    <br><br><br><br>
+  </body>
 </html>

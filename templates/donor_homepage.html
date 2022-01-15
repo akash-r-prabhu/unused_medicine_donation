@@ -1,7 +1,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
-    <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
     <title>DONOR</title>
     <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
 </head>
@@ -9,8 +8,6 @@
 <body style="overflow: scroll; align-items: center">
 
     <div class="main-container" style=" width:99vw;">
-
-        <!-- HEADER -->
         <header class="block">
             <ul class="header-menu horizontal-list">
                 <li>
@@ -30,10 +27,6 @@
                 </li>
             </ul>
             <div class="profile-menu">
-                <!-- <p>Me <a href="#26"><span class="entypo-down-open scnd-font-color"></span></a></p> -->
-                <!-- <div class="profile-picture small-profile-picture">
-                    <img src="{{ url_for('static', filename='logo1.jpg') }}" class="logo"></img>
-                </div> -->
             </div>
             <style>
                 .alert {
@@ -71,10 +64,6 @@
           {% endfor %}
         <div class="left-container container">
             <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
-                <!-- <a class="add-button" href="#28"><span class="icon entypo-plus scnd-font-color"></span></a> -->
-                <!-- <div class="profile-picture big-profile-picture clear">
-                    <img width="150px" alt="Anne Hathaway picture" src="suchal.jpeg" >
-                </div> -->
                 <br>
                 <br>
                 <h1 class="user-name">Welcome back : {{user_identity[0].user_name}}</h1>
@@ -85,9 +74,9 @@
                 <center>
                     <div >
                         <p>ID : {{donor_details[0].id}}</p>
-                        <p>Email : {{donor_details[0].email_id}}</p>
-                        <p>Aadhaar : {{donor_details[0].UniqueID}}</p>
-                        <p>No of previous donations : {{count.value}}</p>
+                        <p>EMAIL ID : {{donor_details[0].email_id}}</p>
+                        <p>AADHAAR NUMBER : {{donor_details[0].UniqueID}}</p>
+                        <p>NUMBER OF PREVIOUS DONATIONS : {{count.value}}</p>
                     </div>
                 </center>
                 
@@ -104,7 +93,6 @@
                 {%for i in prev_donations%}
                 <div class="tweet first">
                     <p>Donation ID : {{i.donation_id}} <br><br>Med ID : {{i.med_id}}<br>Donation Expiry : {{i.donation_expiry}}<br>Quantity: {{i.donation_quantity}}<br><a class="tweet-link" href="#17"></a></p>
-                    <!-- <p><a class="time-ago scnd-font-color" href="#18">3 minutes ago</a></p> -->
                 </div>
                 {% endfor %}
                 
