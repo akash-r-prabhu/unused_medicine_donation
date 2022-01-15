@@ -749,4 +749,5 @@ if __name__=="__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     medinit()
+    app.jinja_env.cache = {}
     app.run(debug=True,host="0.0.0.0")
