@@ -292,6 +292,7 @@ details > summary{
 	/*********************************************** HEADER ***********************************************/
 	header {
 		height: 80px;
+		color: white;
 	}
 		.header-menu {
 			font-size: 17px;

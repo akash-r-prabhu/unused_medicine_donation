@@ -2,6 +2,8 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <title>ADMIN</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
 
 </head>
 
@@ -10,22 +12,22 @@
     <div class="main-container"style=" width:99vw;">
 
         <!-- HEADER -->
-        <header class="block" style="margin-left:0.5vw;margin-top:0.5vw;">
-            <ul class="header-menu horizontal-list">
+        <header class="block" style="margin-left:0.5vw;margin-top:0.5vw;align-items: center;">
+            <ul class="header-menu horizontal-list" >
                 <li>
-                    <a class="header-menu-tab" href="/"><span class="icon entypo-cog scnd-font-color"></span>Home</a>
+                    <a class="header-menu-tab" href="/"><span class="icon entypo-cog scnd-font-color"></span>HOME</a>
                 </li>
                 <li>
-                    <a class="header-menu-tab" href="/#about"><span class="icon fontawesome-user scnd-font-color"></span>About</a>
+                    <a class="header-menu-tab" href="/#about"><span class="icon fontawesome-user scnd-font-color"></span>ABOUT</a>
                 </li>
                 <li>
-                    <a class="header-menu-tab" href="/#services"><span class="icon fontawesome-envelope scnd-font-color"></span>Services</a>
+                    <a class="header-menu-tab" href="/#services"><span class="icon fontawesome-envelope scnd-font-color"></span>SERVICE</a>
                 </li>
                 <li>
-                    <a class="header-menu-tab" href="/#contact"><span class="icon fontawesome-envelope scnd-font-color"></span>Contact</a>
+                    <a class="header-menu-tab" href="/#contact"><span class="icon fontawesome-envelope scnd-font-color"></span>CONTACT</a>
                 </li>
                 <li>
-                    <a class="header-menu-tab" href="/logout">Logout</a>
+                    <a class="header-menu-tab" href="/logout">LOG OUT</a>
                 </li>
             </ul>
             
@@ -46,22 +48,22 @@
         </div>
           {% endfor %}
         <div class="left-container container">
-          <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
+          <div class="profile block" style= "height: 80%"> <!-- PROFILE (MIDDLE-CONTAINER) -->
             <br>
             <div class="profile-picture big-profile-picture clear">
-                <img width="100%" width="100%" alt="Anne Hathaway picture" src="{{ url_for('static', filename='admin_avatar.jpeg') }}"  style="object-fit: cover;width: 150px;
+                <img width="100%" width="100%" alt="Same picture" src="{{ url_for('static', filename='admin_avatar.jpeg') }}"  style="object-fit: cover;width: 150px;
                 height: 150px;
                 border-radius: 50%;">
             </div>
             <h1 class="user-name">{{id}}</h1>
             <div class="profile-description">
                 <p class="scnd-font-color">Admin of Asteri Platina</p>
-                <p class="scnd-font-color">Email id : {{admin_details[0].email_id}}</p>
-                <p class="scnd-font-color">Unique id : {{admin_details[0].UniqueID}}</p>
+                <p class="scnd-font-color">EMAIL ID : {{admin_details[0].email_id}}</p>
+                <p class="scnd-font-color">AADHAAR NUMBER : {{admin_details[0].UniqueID}}</p>
             </div>
             <br>
             <div style="margin-left: 30px; font-size: 20px;">
-              <h1 style="text-decoration: underline;">Database Summary </h1>
+              <h1 style="font-size: larger;">DATABASE SUMMARY </h1>
             <p >Total Active Requests : {{req_list|count}}</p>
             <p >Total donations : {{don_list|count}}</p>
             <p >Total Donors : {{count_donor}}</p>
@@ -139,15 +141,6 @@
                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Expiry</span>{{i.donation_expiry}}</td>
                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Quantity</span>{{i.donation_quantity}}</td>
                 <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span class="inline-block w-1/3 md:hidden font-bold">Donor ID</span>{{i.donor_id}}</td>
-                <!-- <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
-                  <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                  <form action="/admin_homepage" method="POST">
-                    <input type="hidden"  name="identifier" value="form2" >
-                    <input type="hidden" name="donation_id" value="{{i.donation_id}}">
-                  <button type="submit" name="submit_button" value="accept" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">ACCEPT</button>
-                  <button type="submit" name="submit_button" value="reject" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">REJECT</button>
-                </form> 
-                </td> -->
               </tr>
             {% endfor %}
               
@@ -179,10 +172,10 @@
                 </form>
               </div> 
             </details>
-           <details style="color: white;">
-             <summary>
-               UNBLOCK USER
-              </summary>
+          <details style="color: white;">
+            <summary>
+              UNBLOCK USER
+            </summary>
               <div style="color: white; width: 50%; margin: 0 25%;">
                 <form action="/admin_homepage" method="POST" style="color: white;">
                   <input type="hidden"  name="identifier" value="unblock_form" >
@@ -200,7 +193,7 @@
           <details style="color: white;">
             <summary>ADD MEDICINE</summary>
             <form action="/admin_homepage" method="POST">
-              <input type="hidden"  name="identifier" value="add_medicine" >
+              <input type="hidden"  name="identifier" value="Add_medicine" >
               <!-- med_id="01",med_name="Amoxicillin"med_effects="Nausea" med_class="Antibiotics" -->
               <input type="text" name="med_name" placeholder="Medicine name">
               <input type="text" name="med_effects_list" placeholder="Medicine Effects">
@@ -210,7 +203,7 @@
           </details>
 
           <details style="color: white;">
-            <summary>Update Delivered Status</summary>
+            <summary>UPDATE DELIVERED PAGES</summary>
             <form action="/admin_homepage" method="POST">
               <input type="hidden"  name="identifier" value="deliver" >
               <!-- med_id="01",med_name="Amoxicillin"med_effects="Nausea" med_class="Antibiotics" -->
@@ -221,8 +214,6 @@
               <input type="submit" >
             </form>
           </details>
-                
-            
         </div>
         
       

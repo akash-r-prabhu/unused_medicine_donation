@@ -75,6 +75,11 @@
     margin-bottom: 10px;
   }
   
+  button:hover{
+    background-color: #ff416c ;
+    color: black;
+  }
+
   fieldset {
     margin-bottom: 30px;
     border: none;

@@ -1,6 +1,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+    <title>NGO</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
 </head>
 
 <body style="overflow: scroll;">
@@ -11,19 +13,19 @@
         <header class="block">
             <ul class="header-menu horizontal-list">
                 <li>
-                    <a class="header-menu-tab" href="/"><span class="icon entypo-cog scnd-font-color"></span>Home</a>
+                    <a class="header-menu-tab" href="/"><span class="icon entypo-cog scnd-font-color"></span>HOME</a>
                 </li>
                 <li>
-                    <a class="header-menu-tab" href="/#about"><span class="icon fontawesome-user scnd-font-color"></span>About</a>
+                    <a class="header-menu-tab" href="/#about"><span class="icon fontawesome-user scnd-font-color"></span>ABOUT</a>
                 </li>
                 <li>
-                    <a class="header-menu-tab" href="/#services"><span class="icon fontawesome-envelope scnd-font-color"></span>Services</a>
+                    <a class="header-menu-tab" href="/#services"><span class="icon fontawesome-envelope scnd-font-color"></span>SERVICE</a>
                 </li>
                 <li>
-                    <a class="header-menu-tab" href="/#contact"><span class="icon fontawesome-envelope scnd-font-color"></span>Contact</a>
+                    <a class="header-menu-tab" href="/#contact"><span class="icon fontawesome-envelope scnd-font-color"></span>CONTACT</a>
                 </li>
                 <li>
-                    <a class="header-menu-tab" href="/logout">Logout</a>
+                    <a class="header-menu-tab" href="/logout">LOG OUT</a>
                 </li>
             </ul>
             <div class="profile-menu">
@@ -77,11 +79,7 @@
             </div>
             </div>
         <div class="left-container container">
-            <div class="profile block"> <!-- PROFILE (MIDDLE-CONTAINER) -->
-                <!-- <a class="add-button" href="#28"><span class="icon entypo-plus scnd-font-color"></span></a> -->
-                <!-- <div class="profile-picture big-profile-picture clear">
-                    <img width="150px" alt="Anne Hathaway picture" src="suchal.jpeg" >
-                </div> -->
+            <div class="profile block">
                 <br>
                 <br>
                 <h1 class="user-name">Welcome back {{user_identity[0].user_name}}!</h1><br/>

@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}" />
     <script src="admin.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <title>ADMIN LOGIN</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
     <style>
       @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
 
@@ -197,12 +199,11 @@
 			<span></span>
 		</button>
 		<div class="navbar-menu">
-			<a href="/">Home</a>
-			<a href="/#about">About</a>
-			<a href="/#services">Service</a>
-			<a href="/#education">Education</a>
-			<a href="/#contact">Contact</a>
-			<a href="/login">Login</a>
+			<a href="/">HOME</a>
+			<a href="/#about">ABOUT</a>
+			<a href="/#services">SERVICE</a>
+			<a href="/#contact">CONTACT</a>
+			<a href="/login">LOGIN</a>
 			
 		</div>
 	</div>
@@ -210,12 +211,12 @@
   <div class="container" id="container">
     <div class="form-container sign-in-container">
         <form action="/admin_login" method="POST">
-            <h1>Admin Login </h1>
+            <h1>ADMIN LOGIN</h1>
             <br>
-            <input type="text" name="id" placeholder="Username" />
-            <input type="password" name="password" placeholder="Password" />
+            <input type="text" name="id" required = "required" placeholder="ADMIN ID" />
+            <input type="password" name="password" required = "required" placeholder="PASSWORD" />
             <a href="#">Forgot your password?</a>
-            <button type="submit" >Login</button>
+            <button type="submit" >LOG IN</button>
         </form>
     </div>
   </div>

@@ -3,8 +3,10 @@
     <link rel="stylesheet" href="admin.css" />
     <script src="admin.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>SIGN UP</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
     <style>
       @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
 
@@ -63,6 +65,11 @@
         letter-spacing: 1px;
         text-transform: uppercase;
         transition: transform 80ms ease-in;
+      }
+
+      button:hover{
+        background-color: #ff416c ;
+        color: black;
       }
 
       button:active {
@@ -196,7 +203,7 @@
         <a href="/#about">ABOUT</a>
         <a href="/#services">SERVICE</a>
         <a href="/#contact">CONTACT</a>
-        <a href="/login">LOGIN</a>
+        <a href="/login">LOG IN</a>
         
       </div>
     </div>
@@ -205,23 +212,14 @@
     <div class="form-container sign-in-container">
     <!-- <form action="#" style="margin-right: 50%;"> -->
           <h1>SIGN UP</h1><br>
-        <a href="/donor_signup"><button id="requestor">SIGN UP AS A DONOR</button></a><br>
-        <a href="/requestor_signup"><button>SIGN UP AS A REQUESTOR</button></a><br>
-        <a href="/ngo_signup"><button>SIGN UP AS AN NGO</button></a>
+        <a href="/donor_signup"><button id="requestor">SIGN UP AS DONOR</button></a><br>
+        <a href="/requestor_signup"><button>SIGN UP AS REQUESTOR</button></a><br>
+        <a href="/ngo_signup"><button>SIGN UP AS NGO</button></a>
         <br>
         
     <!-- </form> -->
       
     </div>
-    <!-- <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start journey with us</p>
-                    <a href="signup.html"><button class="ghost" id="signUp">Sign Up</button></a>
-                </div>
-            </div>
-        </div> -->
   </div>
 </body>
 </html>
