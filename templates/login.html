@@ -52,7 +52,7 @@
       button {
         border-radius: 20px;
         border: 1px solid #ff4b2b;
-        background-color: #ff4b2b;
+        background-color: #ff4b2b; 
         color: #ffffff;
         font-size: 12px;
         font-weight: bold;
@@ -61,6 +61,10 @@
         text-transform: uppercase;
         transition: transform 80ms ease-in;
         width: 240px;
+      }
+
+      button:hover {
+        background-color: #ff416c;
       }
 
       button:active {
@@ -185,6 +189,8 @@
         text-decoration: none;
       }
     </style>
+    <title>LOGIN</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
   </head>
   <body>
     <nav class="navbar" style="top: 1;" >
@@ -224,12 +230,12 @@
   <div class="container" id="container">
     <div class="form-container sign-in-container">
     <!-- <form action="#" style="margin-right: 50%;"> -->
-          <h1>Login</h1><br>
-        <a href="/requestor_login"><button id="requestor">Requestor Login</button></a><br>
-        <a href="/donor_login"><button>Donor Login</button></a><br>
-        <a href="/ngo_login"><button>NGO Login</button></a>
+          <h1>LOGIN</h1><br>
+        <a href="/requestor_login"><button id="requestor">REQUESTOR LOGIN</button></a><br>
+        <a href="/donor_login"><button>DONOR LOGIN</button></a><br>
+        <a href="/ngo_login"><button>NGO LOGIN</button></a>
         <br>
-        <a href="/admin_login"><button>Admin Login</button></a><br>
+        <a href="/admin_login"><button>ADMIN LOGIN</button></a><br>
         
     <!-- </form> -->
       
@@ -238,8 +244,8 @@
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
                     <h1>Hello, Friend!</h1>
-                    <p>Enter your personal details and start journey with us</p>
-                    <a href="/signup"><button class="ghost" id="signUp">Sign Up</button></a>
+                    <p>Enter your personal details and start the journey with us</p>
+                    <a href="/signup"><button class="ghost" id="signUp">SIGN UP</button></a>
                 </div>
             </div>
         </div>

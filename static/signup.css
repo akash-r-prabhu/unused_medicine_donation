@@ -74,6 +74,11 @@
     box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
     margin-bottom: 10px;
   }
+
+  button:hover {
+    background-color: #FF416C;
+    color: black;
+  }
   
   fieldset {
     margin-bottom: 30px;

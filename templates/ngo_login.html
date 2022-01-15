@@ -183,6 +183,8 @@
         text-decoration: none;
       }
     </style>
+    <title>NGO LOGIN</title>
+    <link rel="icon" href="{{ url_for('static', filename='logo1.jpg') }}">
   </head>
   <nav class="navbar" style="top: 1;" >
 		<div class="inner-width">
@@ -193,12 +195,11 @@
 			<span></span>
 		</button>
 		<div class="navbar-menu">
-			<a href="/">Home</a>
-			<a href="/#about">About</a>
-			<a href="/#services">Service</a>
-			<a href="/#education">Education</a>
-			<a href="/#contact">Contact</a>
-			<a href="/login">Login</a>
+			<a href="/">HOME</a>
+			<a href="/#about">ABOUT</a>
+			<a href="/#services">SERVICE</a>
+			<a href="/#contact">CONTACT</a>
+			<a href="/login">LOG IN</a>
 			
 		</div>
 	</div>
@@ -206,12 +207,12 @@
   <div class="container" id="container">
     <div class="form-container sign-in-container">
         <form action="/ngo_login" method="POST">
-            <h1>NGO Login </h1>
+            <h1>NGO LOGIN</h1>
             <br>
-            <input type="text" name="id" placeholder="ID" />
-            <input type="password" name="password" placeholder="Password" />
+            <input type="text" name="id"  required placeholder="NGO ID" />
+            <input type="password" name="password"  required placeholder="PASSWORD" />
             <a href="#">Forgot your password?</a>
-            <button type="submit" id="requestmed">Login</button>
+            <button type="submit" id="requestmed">LOG IN</button>
         </form>
     </div>
   </div>
