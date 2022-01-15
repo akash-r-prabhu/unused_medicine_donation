@@ -328,8 +328,16 @@ def donor_homepage():
                 db.session.commit()
         prev_donations=DonatedMedicine.query.filter_by(donor_id=id) 
         donor_details=users.query.filter_by(id=id)  
-        user_identity=UserIdentity.query.filter_by(UniqueID=donor_details[0].UniqueID) 
-        return render_template("donor_homepage.html",id=current_user.get_id(),med_list=med,prev_donations=prev_donations,donor_details=donor_details,user_identity=user_identity)
+        user_identity=UserIdentity.query.filter_by(UniqueID=donor_details[0].UniqueID)
+        em=Announcement.query.all() 
+        l=list()
+        for i in em:
+            t=RequestedMedicine.query.filter_by(request_id=i.request_id).first()
+            if t is not None:
+                id=t.med_id
+                n=Medicine.query.filter_by(med_id=id)
+                l.append(n[0].med_name)
+        return render_template("donor_homepage.html",id=current_user.get_id(),med_list=med,prev_donations=prev_donations,donor_details=donor_details,user_identity=user_identity,l=l)
         
     else:
         return render_template("forbidden.html")
@@ -488,6 +496,15 @@ def admin_homepage():
                 except:
                     db.session.rollback()
                     flash("Details entered are wrong")
+            elif request.form['identifier']=="emergency":
+                try:
+                    request_id=request.form["request_id"]
+                    em=Announcement(request_id=request_id)
+                    db.session.add(em)
+                    db.session.commit()
+                except:
+                    db.session.rollback()
+                    flash("Details already entered")
 
                     
         req_list=RequestedMedicine.query.all()
