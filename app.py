@@ -1,12 +1,7 @@
-from enum import unique
-import re
-import random
 from datetime import date
 from flask import Flask,render_template,request,url_for, redirect,flash
-from flask.sessions import NullSession
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
-from datetime import datetime
 from flask_login import UserMixin,LoginManager,login_user,login_required,logout_user,current_user
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///asteri_platina.db"
@@ -360,7 +355,14 @@ def requestor_homepage():
         prev_requests=RequestedMedicine.query.filter_by(requestor_id=id)    
         requestor_details=users.query.filter_by(id=id)  
         user_identity=UserIdentity.query.filter_by(UniqueID=requestor_details[0].UniqueID)   
-        return render_template("requestor_homepage.html",id=current_user.get_id(),med_list=med,prev_requests=prev_requests,requestor_details=requestor_details,user_identity=user_identity)
+        context={
+            'id':current_user.get_id(),
+            'med_list':med,
+            'prev_requests':prev_requests,
+            'requestor_details':requestor_details,
+            'user_identity':user_identity
+        }
+        return render_template("requestor_homepage.html",**context)
     else:
         return render_template("forbidden.html")
 
@@ -393,8 +395,16 @@ def ngo_homepage():
         prev_requests=RequestedMedicine.query.filter_by(requestor_id=id)    
         prev_donations=DonatedMedicine.query.filter_by(donor_id=id) 
         ngo_details=users.query.filter_by(id=id)  
-        user_identity=UserIdentity.query.filter_by(UniqueID=ngo_details[0].UniqueID) 
-        return render_template("ngo_homepage.html",id=current_user.get_id(),med_list=med,prev_requests=prev_requests,prev_donations=prev_donations,ngo_details=ngo_details,user_identity=user_identity)
+        user_identity=UserIdentity.query.filter_by(UniqueID=ngo_details[0].UniqueID)
+        context={
+            'id':current_user.get_id(),
+            'med_list':med,
+            'prev_requests':prev_requests,
+            'prev_donations':prev_donations,
+            'ngo_details':ngo_details,
+            'user_identity':user_identity
+        } 
+        return render_template("ngo_homepage.html",**context)
     else:
         return render_template("forbidden.html")
 
@@ -520,7 +530,21 @@ def admin_homepage():
         l=list()
         for i in del_list:
             l.append(i.request_id)
-        return render_template("admin_homepage.html",id=current_user.get_id(),req_list=req_list,don_list=don_list,donor_list=donor_list,blocked_list=blocked_list,admin_details=admin_details,count_donor=count_donor,count_requestor=count_requestor,count_ngo=count_ngo,count_blocked=count_blocked,available_med=len(don_list)-len(del_list),l=l)
+        context={
+            'id':current_user.get_id(),
+            'req_list':req_list,
+            'don_list':don_list,
+            'donor_list':donor_list,
+            'blocked_list':blocked_list,
+            'admin_details':admin_details,
+            'count_donor':count_donor,
+            'count_requestor':count_requestor,
+            'count_ngo':count_ngo,
+            'count_blocked':count_blocked,
+            'available_med':len(don_list)-len(del_list),
+            'l':l
+        }
+        return render_template("admin_homepage.html",**context)
     else:
         return render_template("forbidden.html")
 
@@ -664,6 +688,8 @@ def medinit():
     
 
 if __name__=="__main__":
+    from werkzeug.middleware.profiler import ProfilerMiddleware
+    app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[5])
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
     medinit()
