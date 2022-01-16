@@ -150,7 +150,7 @@ def donor_login():
                 return redirect(url_for('donor_homepage'))
     return render_template("donor_login.html")
 
-@app.route("https://asteri-platina.herokuapp.com/admin_login/admin_login", methods=['GET', 'POST'])
+@app.route("https://asteri-platina.herokuapp.com/admin_login", methods=['GET', 'POST'])
 def admin_login():
     logout_user()
     if request.method=="POST":
