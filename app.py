@@ -150,7 +150,7 @@ def donor_login():
                 return redirect(url_for('donor_homepage'))
     return render_template("donor_login.html")
 
-@app.route("/admin_login", methods=['GET', 'POST'])
+@app.route("https://asteri-platina.herokuapp.com/admin_login", methods=['GET', 'POST'])
 def admin_login():
     logout_user()
     if request.method=="POST":
@@ -694,4 +694,4 @@ if __name__=="__main__":
     app.config['SESSION_TYPE'] = 'filesystem'
     medinit()
     app.jinja_env.cache = {}
-    app.run(debug=True,host="0.0.0.0")
+    app.run(debug=True)
