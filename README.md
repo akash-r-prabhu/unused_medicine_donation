@@ -1,3 +1,4 @@
+# Unused Medicine donation system
 <p>
 Not everyone can afford medication at all times and not every medicine bought is used every time. The Medicine Donation system proposed here aims at providing an online platform for donating medicine or unused medicine to needy people. Both the ones who want to donate as well as want medicine can register as Users on this system by submitting their necessary details. The user has to register for donating the medicine. The registered users can donate the medicines by providing accurate details of medicine. The users can request to donate or avail the medicines. The Charity Trust or needy people can also register their details and requirement to avail the medicine.
 <p>
